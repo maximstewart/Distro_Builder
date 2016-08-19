@@ -1,0 +1,31 @@
+#!/bin/bash
+
+## Resolution of Xephyr
+## Examples: 1920x1080 or 1600x900, etc
+RES="1920x1080"
+
+## Screen-id of Xephyr
+## Examples:  :10  or :1.0, etc
+## Note: Don't use :0 or :0.0 as they are your system's.
+ID=":10"
+
+## Iso Version
+## Examples:  16.04 or 15.04, etc
+## Miniremix versions : http://www.ubuntu-mini-remix.org/
+VERSION="16.04"
+
+## Iso Archatect
+## Examples:  32bit i386 or 64bit amd64, etc
+ARCH="amd64"
+
+## Iso boot info
+NAME=""  ## Set to your distro name
+
+## Live User
+lvUSER="" ## Set to your preference
+
+
+##    DO NOT CHANGE OR REMOVE BELOW UNLESS YOU KNOW WHAT YOU ARE DOING    ##
+
+## Clean manifest-desktop file of unneeded parts
+REMOVE='ubiquity ubiquity-frontend-gtk ubiquity-frontend-kde casper lupin-casper live-initramfs user-setup discover1 xresprobe os-prober libdebian-installer4'

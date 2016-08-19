@@ -1,0 +1,184 @@
+############################
+####    SETUP & INFO    ####
+############################
+
+## WEBSITES
+    Window Managers :
+        http://xwinman.org/
+    Source List Generator :
+        https://repogen.simplylinux.ch/index.php
+    Themes :
+        http://gnome-look.org/
+    Debootstrap Versions:
+        http://packages.ubuntu.com/search?keywords=debootstrap&searchon=names&suite=all&section=all
+    Ubuntu-Mini-Remix :
+        http://www.ubuntu-mini-remix.org/
+
+##  SETUP DIR STRUCTURE
+*** buildDir is where you are maintaining the squashfs and iso bits
+
+mkdir -p buildDir/iso/{casper,isolinux,install}
+                       ## holds where squshfs goes after modding.
+                       ## HAS ALL UNCOMPRESSED ISO BITS EXCLUDING SQUASHFS
+                       ## OR CONTAINS DEBOOTSTRAP GENERATED DIR STRUCTURE
+mkdir buildDir/squashfs-root/
+                       ## this is where we can extract a squashfs
+                       ## from an iso OR generate our own from debootstrap.
+                       ** EXTRACTING A SQUASHFS CREATES THIS
+                       ** ONLY DO WHEN DEBOOTSTRAPING
+
+## PACKAGES NEEDED PRIOR TO DOING ANYTHING
+sudo apt-get install xnest xserver-xephyr syslinux squashfs-tools genisoimage debootstrap
+                       ## debootstrap needs to be the version you're building
+                       ## ie, building vivid then need vivid's debootstrap
+                       ## link above has versions to dl
+
+## FOR GUI CHROOT LIKE ENVIRONMENT
+****  In a seperate terminal from build terminal
+Xnest -ac :10 -geometry 1920x1080  ## Monitor resolution
+OR
+Xephyr -resizeable -screen 1920x1080 :10
+
+############################
+####    BUILD METHODS   ####
+############################
+
+## BUILDING FROM AN Ubuntu-Mini-Remix
+      -- DL Ubuntu-Mini-Remix [link above] and mount it
+      -- copy out its contents to the iso/ dir
+         GET THE HIDDEN .disk/ dir! ISO WILL FAIL OTHERWISE!!
+      -- from that, copy the iso/casper/filesystem.squashfs to the same dir
+         as iso/ dir
+      -- unsquashfs filesystem.squashfs
+
+
+## BUILDING FROM AN DEBOOTSTRAP
+## same location as iso/
+      sudo debootstrap --arch=amd64 vivid squashfs-root/   ## For 32bit use --arch=i386
+
+
+############################
+####    BUILD PROCESS   ####
+############################
+
+cd squashfs-root/
+sudo mount -t proc proc proc/
+sudo mount -t sysfs sys sys/
+sudo mount -o bind /dev dev/
+sudo cp /etc/resolv.conf etc/
+sudo cp /etc/hosts etc/hosts   ## do this one if in debootstrap
+
+sudo chroot . bash
+export HOME=/root
+export LC_ALL=C
+export DISPLAY=:10
+
+## GET sourcelist from source list generator [link above]
+nano it to /etc/apt/sources.list
+apt-get upgrade
+
+## INSTALL AND MOD STUFF
+apt-get update
+apt-get install --yes dbus
+apt-get install -y ubuntu-standard casper lupin-casper
+apt-get install -y laptop-detect os-prober
+apt-get install -y linux-generic
+
+## tasksel lets you ionstall various setups
+apt-get install -y xserver-xorg xorg xinit ubiquity-frontend-gtk tasksel synaptic aptitude apt-xapian-index
+
+## just a ref
+apt-get install mate-core sddm
+
+## change live cd user
+nano etc/casper.conf
+
+
+############################
+####    CLEAN PROCESS   ####
+############################
+
+##Clean the older non-used kernels to save space:
+      dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | xargs sudo apt-get -y purge
+
+## CLEAN SYSTEM
+      apt-get autoremove --purge
+      apt-get autoclean
+      rm -rf tmp/*
+      rm /etc/resolv.conf
+      rm /var/lib/dbus/machine-id
+      rm /sbin/initctl
+      dpkg-divert --rename --remove /sbin/initctl
+
+## in chroot or outer
+      umount -lf dev/
+      umount -lf proc/
+      umount -lf sys/
+      exit
+
+EDIT to change names of Ubuntu
+iso/isolinux/txt.cfg
+
+
+################################
+####    Recreate manifest   ####
+################################
+
+      sudo chroot squashfs-root/ dpkg-query -W --showformat='${Package} ${Version}\n' | sudo tee iso/casper/filesystem.manifest
+      sudo cp -v iso/casper/filesystem.manifest iso/casper/filesystem.manifest-desktop
+
+PUT IN SCRIPT >>>
+
+      REMOVE='ubiquity ubiquity-frontend-gtk ubiquity-frontend-kde casper lupin-casper live-initramfs user-setup discover1 xresprobe os-prober libdebian-installer4'
+      for i in $REMOVE
+      do
+              sudo sed -i "/${i}/d" iso/casper/filesystem.manifest-desktop
+      done
+
+############################
+####    MAKE SQUASHFS   ####
+############################
+
+If this Customised Remix is to potentially be installed on some systems then
+the /boot folder will be needed. To allow the Customised Cd to be an
+installer Cd, compress the entire chroot folder with this command:
+
+                          ##  avg compression
+      sudo mksquashfs squashfs-root/ iso/casper/filesystem.squashfs
+
+                          ##  best compression
+      sudo mksquashfs squashfs-root/ iso/casper/filesystem.squashfs -comp xz -e squashfs-root/boot
+
+
+Then write the filesystem.size file, which is needed by the installer:
+
+      sudo chmod 644 iso/casper/filesystem.size
+      printf $(sudo du -sx --block-size=1 squashfs-root/ | cut -f1) > iso/casper/filesystem.size
+      sudo chmod 444 iso/casper/filesystem.size
+
+############################
+####    Calculate MD5   ####
+############################
+
+This calculates the md5sum of everything in the image folder,
+except the file named md5sum.txt.
+
+      sudo -s
+      (cd iso && find . -type f -print0 | xargs -0 md5sum | grep -v "\./md5sum.txt" > SHA256SUMS)
+      exit
+
+###############################
+####    Create ISO Image   ####
+###############################
+
+Create iso from the image directory using the command-line
+
+      cd iso/
+
+OPTION 1::
+## Works for me....
+sudo mkisofs -D -r -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../Sol-OSv3.iso .
+
+OPTION 2::
+## Hasn't worked for me....
+sudo mkisofs -r -no-emul-boot -boot-load-size 4 -o ../ubu-mini.iso -b isolinux/isolinux.bin -c isolinux/boot.cat ./
