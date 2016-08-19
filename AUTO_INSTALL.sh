@@ -1,6 +1,6 @@
 #---------------- Copyright notices and creator info-----------------------------#
 #
-# By Maxim F. Stewart Contact: [maxim2131@gmail.com] OR [gamer1119@gmail.com]
+# By Maxim F. Stewart Contact: [maximstewart1@gmail.com]
 #
 # Copyright 2013 Maxim F. Stewart
 #    This program is free software: you can redistribute it and/or modify
