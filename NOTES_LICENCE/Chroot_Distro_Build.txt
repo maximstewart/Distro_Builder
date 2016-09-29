@@ -166,10 +166,12 @@ If this Customised Remix is to potentially be installed on some systems then
 the /boot folder will be needed. To allow the Customised Cd to be an
 installer Cd, compress the entire chroot folder with this command:
 
-                          ##  avg compression
+                          ##  avg compression with possible faster boot times
+                          ##  the reason is that it takes more time to to uncompress when loading iso
       sudo mksquashfs squashfs-root/ iso/casper/filesystem.squashfs
 
-                          ##  best compression
+                          ##  best compression with possible slower boot times
+                          ##  the reason is that it takes less time to to uncompress when loading iso
       sudo mksquashfs squashfs-root/ iso/casper/filesystem.squashfs -comp xz -e squashfs-root/boot
 
 
