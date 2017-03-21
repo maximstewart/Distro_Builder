@@ -1,26 +1,4 @@
 #!/bin/bash
-#---------------- Copyright notices and creator info-----------------------------#
-#
-# By Maxim F. Stewart Contact: [maximstewart1@gmail.com]
-#
-# Copyright 2013 Maxim F. Stewart
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 2 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program. If not, see <http://www.gnu.org/licenses/>.
-#
-#
-#
-#
-#--------------------------------------------------------------------------------#
 . CONFIG
 
 rootNisoChk() {
@@ -49,7 +27,7 @@ genIso=$(which genisoimage)  ## Iso maker
         echo ""
         echo "Going to run :"
         echo "     apt-get install xserver-xephyr syslinux squashfs-tools genisoimage -y"
-        sleep 3
+        sleep 4
         apt-get install xserver-xephyr syslinux squashfs-tools genisoimage -y
         getIso
     else
@@ -107,34 +85,72 @@ getIso() {
 }
 
 main() {
-    if ! [ -f *.iso ]; then
-        echo "Sorry, there is no iso to work with in the current directory."
-        exit 1
-    fi
+    if [ ! -f *.iso ] && [ ! -d squashfs-root ]; then
+        clear
+        echo "Sorry, there is no iso or squashfs-root dir to work with in the current directory."
+        echo "Going back to download ans Ubuntu Mini Iso..."
+        sleep 4
+        getIso
+    elif [ -f *.iso ] && [ -d squashfs-root ]; then
+        clear
+        echo "Both an iso and squashfs-root are present..."
+        echo "Which do you wish to use?"
+        read -p "1.) `echo *.iso`
+2.) Use former session: squashfs-root
+3.) Exit
+--> : " ANSR
+        while [[ $ANSR != "1" ]] && [[ $ANSR != "2" ]] && \
+              [[ $ANSR != "3" ]]
+        do
+            read -p "1.) `echo *.iso`
+2.) Use former session: squashfs-root
+3.) Exit
+--> : " ANSR
+        done
 
+        if [[ $ANSR == "1" ]]; then
+              bash cleanup.sh
+              mountAndCopy
+        elif [[ $ANSR == "2" ]]; then
+             chrootr
+        elif [[ $ANSR == "3" ]]; then
+             exit
+        fi
+    elif [ -d squashfs-root ]; then
+            clear
+            echo "Squashfs-root directory found. Chrooting to directory."
+            sleep 4
+            chrootr
+    elif [ -f *.iso ]; then
+            clear
+            echo "Iso found. Mounting and copying to proper file structure. Then chrooting in...\n"
+            sleep 4
+           mountAndCopy
+    fi
+}
+
+mountAndCopy() {
     ## Prep dirs
         mkdir iso/ mnt/
 
     ## Prep filesystem
         mount -o loop *.iso mnt/
-        cp -r mnt/. iso/ && \
-            mv iso/casper/filesystem.squashfs .
+	cp -r mnt/. iso/ && \
+	mv iso/casper/filesystem.squashfs .
 
     ## Unspuashfs the squashfs
         unsquashfs filesystem.squashfs && \
-            rm filesystem.squashfs
+	rm filesystem.squashfs
 
     ## Cleanup some prep items
         umount mnt/ && rmdir mnt/
-        rm *.iso
-
-    chrootr
-}
-
-chrootr() {
     ## Copy over build files 'n scripts
         cp AUTO_INSTALL.sh squashfs-root/
         cp -r COPY_OVER_TO_CHROOT/ squashfs-root/
+}
+
+chrootr() {
+
 
     ## Set Xephyr and set chrooting mounts
         Xephyr -resizeable -screen "${RES}" "${ID}" &
