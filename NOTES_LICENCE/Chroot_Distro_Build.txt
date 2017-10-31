@@ -1,26 +1,3 @@
-#---------------- Copyright notices and creator info-----------------------------#
-#
-# By Maxim F. Stewart Contact: [maximstewart1@gmail.com]
-#
-# Copyright 2013 Maxim F. Stewart
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program. If not, see <http://www.gnu.org/licenses/>.
-#
-#
-#
-#
-#--------------------------------------------------------------------------------#
-
 ############################
 ####    SETUP & INFO    ####
 ############################
@@ -36,6 +13,13 @@
         http://packages.ubuntu.com/search?keywords=debootstrap&searchon=names&suite=all&section=all
     Ubuntu-Mini-Remix :
         http://www.ubuntu-mini-remix.org/
+
+    Good Reference :
+        http://willhaley.com/blog/create-a-custom-debian-stretch-live-environment-ubuntu-17-zesty/
+    Other :
+        https://wiki.ubuntu.com/Releases
+        http://archive.ubuntu.com/ubuntu/
+        http://archive.ubuntu.com/ubuntu/pool/main/d/debootstrap/
 
 ##  SETUP DIR STRUCTURE
 *** buildDir is where you are maintaining the squashfs and iso bits
@@ -77,6 +61,8 @@ Xephyr -resizeable -screen 1920x1080 :10
 
 ## BUILDING FROM AN DEBOOTSTRAP
 ## same location as iso/
+      sudo debootstrap --variant=buildd <code name such as vivid> <chroot path> http://archive.ubuntu.com/ubuntu/
+                                              OR
       sudo debootstrap --arch=amd64 vivid squashfs-root/   ## For 32bit use --arch=i386
 
 
@@ -166,12 +152,10 @@ If this Customised Remix is to potentially be installed on some systems then
 the /boot folder will be needed. To allow the Customised Cd to be an
 installer Cd, compress the entire chroot folder with this command:
 
-                          ##  avg compression with possible faster boot times
-                          ##  the reason is that it takes more time to to uncompress when loading iso
+                          ##  avg compression
       sudo mksquashfs squashfs-root/ iso/casper/filesystem.squashfs
 
-                          ##  best compression with possible slower boot times
-                          ##  the reason is that it takes less time to to uncompress when loading iso
+                          ##  best compression
       sudo mksquashfs squashfs-root/ iso/casper/filesystem.squashfs -comp xz -e squashfs-root/boot
 
 

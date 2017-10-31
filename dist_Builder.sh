@@ -123,9 +123,10 @@ main() {
             chrootr
     elif [ -f *.iso ]; then
             clear
-            echo "Iso found. Mounting and copying to proper file structure. Then chrooting in...\n"
+            echo "Iso found; mounting and copying to proper file structure. Then chrooting in..."
             sleep 4
-           mountAndCopy
+            mountAndCopy
+            chrootr
     fi
 }
 
@@ -135,12 +136,12 @@ mountAndCopy() {
 
     ## Prep filesystem
         mount -o loop *.iso mnt/
-	cp -r mnt/. iso/ && \
-	mv iso/casper/filesystem.squashfs .
+        cp -r mnt/. iso/ && \
+        mv iso/casper/filesystem.squashfs .
 
     ## Unspuashfs the squashfs
         unsquashfs filesystem.squashfs && \
-	rm filesystem.squashfs
+        rm filesystem.squashfs
 
     ## Cleanup some prep items
         umount mnt/ && rmdir mnt/
@@ -150,8 +151,6 @@ mountAndCopy() {
 }
 
 chrootr() {
-
-
     ## Set Xephyr and set chrooting mounts
         Xephyr -resizeable -screen "${RES}" "${ID}" &
         cd squashfs-root/

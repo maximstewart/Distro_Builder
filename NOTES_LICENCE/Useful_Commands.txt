@@ -1,0 +1,34 @@
+##  Removes all packages but the ones specified and its dependencies
+# !~nubuntu-minimal
+aptitude markauto '~i !~nxserver !~nxserver-xorg !~nxorg !~nlinux-image-generic !~nsquashfs-tools !~ncasper !~naptitude !~napt-get !~napt' -y
+
+
+##  Get installed pkgs and insert to txt file
+apt list --installed | awk '{print $1}' | cut -f1 -d"/" > installed-list.txt
+
+##  Remove pkgs in the made txt file
+apt-get remove --purge `cat installed-list.txt`
+
+##  Clean un-needed pkgs
+apt-get autoremove --purge
+
+##  Remove old install pkgs
+apt-get autoclean
+
+##  Update pkg apt lists
+apt-get update
+
+##  Updates pkgs
+apt-get upgrade
+
+
+apt-get remove --purge shotwell* rhythmbox* thunderbird* totem* remmina* seahorse* libreoffice* gedit* gnome-* \
+vino* whoopsie* cheese* evince* firefox* eog* aisleriot* unity* yelp* totem* transmission-gtk* gparted* ubuntu-docs ubuntu-software* \
+zeitgeist-core zeitgeist-datahub onboard nautilus* simple-scan libqt4* qt4* adwaita-icon-theme* apport-gtk* bamfdaemon* \
+baobab* checkbox-converged* checkbox-gui* deja-dup* fcitx-config-common* fcitx-config-gtk* fcitx-frontend-gtk3* \
+file-roller* gcr* gir1.2-appindicator3-0.1* gir1.2-gtk-3.0* gir1.2-gtksource-3.0* gir1.2-peas-1.0* gir1.2-rb-3.0* \
+gir1.2-timezonemap-1.0* gir1.2-vte-2.91* gir1.2-webkit2-4.0* gir1.2-wnck-3.0* gkbd-capplet* gstreamer1.0-clutter-3.0* \
+gucharmap* gvfs-backends* humanity-icon-theme* indicator-application* indicator-appmenu* indicator-printers* \
+language-selector-gnome* samba* cups* libunity* alsa* pulseaudio* ubuntu-drivers-common* ubuntu-keyring* ubuntu-minimal* \
+ubuntu-mobile-icons* ubuntu-release-upgrader-core* ubuntu-settings* ubuntu-sounds* ubuntu-system-service* \
+ubuntu-touch-sounds* ubuntu-ui-toolkit-theme* ubuntu-wallpapers* ubuntu-wallpapers-xenial*
