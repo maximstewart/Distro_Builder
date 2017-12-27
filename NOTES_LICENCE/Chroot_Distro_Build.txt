@@ -195,6 +195,10 @@ OPTION 1::
 ## Works for me....
 sudo mkisofs -D -r -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../Sol-OSv3.iso .
 
+OR
+
+sudo mkisofs  -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../Sol-OSv3.iso ./
+
 OPTION 2::
 ## Hasn't worked for me....
 sudo mkisofs -r -no-emul-boot -boot-load-size 4 -o ../ubu-mini.iso -b isolinux/isolinux.bin -c isolinux/boot.cat ./
