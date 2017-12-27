@@ -18,6 +18,8 @@
         http://www.syslinux.org/wiki/index.php?title=ISOLINUX    (THIS CREATES THE BOOT STRUCTURE FOR THE ISO!!!)
     SYSLINUX Archive  (Needed for isolinux.bin && ldlinux.c32 to follow instructions in above link!!)
         https://www.kernel.org/pub/linux/utils/boot/syslinux/
+    NON SYSLINUX ARCHIVE METHOD    (Try and get files from here)
+        /usr/lib/syslinux/
 
     Good Reference :
         http://willhaley.com/blog/create-a-custom-debian-stretch-live-environment-ubuntu-17-zesty/
