@@ -2,7 +2,7 @@
 . CONFIG
 
 rootNisoChk() {
-    if [ $(id -u) -eq 0 ]; then
+    if [ "$(id -u)" -eq 0 ]; then
          softChk
     else
         echo "Sorry, you are not root."
@@ -20,10 +20,10 @@ genIso=$(which genisoimage)  ## Iso maker
     if [[ $xyphr == "" ]] || [[ $sysLnx == "" ]] || \
        [[ $squash == "" ]] || [[ $genIso == "" ]]; then
         echo "##  Missing some packages  ##"
-        echo "Xephyr :" $xyphr
-        echo "Syslinux :" $sysLnx
-        echo "Squashfs-tools :" $squash
-        echo "Genisoimage :" $genIso
+        echo "Xephyr :" "${xyphr}"
+        echo "Syslinux :" "${sysLnx}"
+        echo "Squashfs-tools :" "${squash}"
+        echo "Genisoimage :" "${genIso}"
         echo ""
         echo "Going to run :"
         echo "     apt-get install xserver-xephyr syslinux squashfs-tools genisoimage -y"
@@ -37,8 +37,8 @@ genIso=$(which genisoimage)  ## Iso maker
 
 getIso() {
     clear
-    echo "##  Download Ubuntu Mini Remix  ##"
-    echo "Would you like to download an Ubuntu Mini Iso?"
+    echo -e "##  Download Ubuntu Mini Remix  ##\n" \
+            "Would you like to download an Ubuntu Mini Iso?"
     read -p "(yY/Nn) --> " ANSR
     while [[ $ANSR != "y" ]] && [[ $ANSR != "Y" ]] && \
           [[ $ANSR != "n" ]] && [[ $ANSR != "N" ]]
@@ -49,8 +49,8 @@ getIso() {
     ## Check if dl iso is wanted then dl it
     if [[ $ANSR == "Y" ]] || [[ $ANSR == "y" ]]; then
         clear
-        echo "##  Default Settings Or Set Version And Arch  ##"
-        echo " Would you like to use the default choices? "
+        echo -e "##  Default Settings Or Set Version And Arch  ##\n" \
+                "Would you like to use the default choices? "
         read -p "(yY/Nn) --> " ANSR
         while [[ $ANSR != "y" ]] && [[ $ANSR != "Y" ]] && \
               [[ $ANSR != "n" ]] && [[ $ANSR != "N" ]]
@@ -58,25 +58,25 @@ getIso() {
             read -p "(yY/Nn) --> " ANSR
         done
 
-        if [ $ANSR == "N" ] || [ $ANSR == "n" ]; then
+        if [ "${ANSR}" == "N" ] || [ "${ANSR}" == "n" ]; then
             clear
-            echo "##  Get Version  ##"
-            echo "What version would you like?"
-            echo "Examples :"
-            echo "    LTS : 16.04"
-            echo "    Non-LTS : 15.10"
-            echo "Be very sure you are correctly entering the version."
+            echo -e "##  Get Version  ##\n" \
+                    "What version would you like?\n" \
+                    "Examples :\n" \
+                    "    LTS : 16.04\n" \
+                    "    Non-LTS : 15.10\n" \
+                    "Be very sure you are correctly entering the version."
                 read -p "Version --> : " VERSION
             clear
-            echo "##  Get Architect  ##"
-            echo "What version would you like?"
-            echo "    32bit : i386"
-            echo "    64bit : amd64"
-            echo "Be very sure you are correctly entering the architect."
+            echo -e "##  Get Architect  ##\n" \
+                    "What version would you like?\n" \
+                    "    32bit : i386\n" \
+                    "    64bit : amd64\n" \
+                    "Be very sure you are correctly entering the architect."
                 read -p "Arch --> : " ARCH
-            wget http://ubuntu-mini-remix.mirror.garr.it/mirrors/ubuntu-mini-remix/${VERSION}/ubuntu-mini-remix-${VERSION}-${ARCH}.iso
+            wget http://ubuntu-mini-remix.mirror.garr.it/mirrors/ubuntu-mini-remix/"${VERSION}"/ubuntu-mini-remix-"${VERSION}"-"${ARCH}".iso
         else
-            wget http://ubuntu-mini-remix.mirror.garr.it/mirrors/ubuntu-mini-remix/${VERSION}/ubuntu-mini-remix-${VERSION}-${ARCH}.iso
+            wget http://ubuntu-mini-remix.mirror.garr.it/mirrors/ubuntu-mini-remix/"${VERSION}"/ubuntu-mini-remix-"${VERSION}"-"${ARCH}".iso
             main
         fi
     else
@@ -85,24 +85,25 @@ getIso() {
 }
 
 main() {
-    if [ ! -f *.iso ] && [ ! -d squashfs-root ]; then
+    list=$(find . -maxdepth 1 -name "*.iso" -printf '%P\n')
+    if [[ "${list}" == "" ]] && [ ! -d squashfs-root ]; then
         clear
-        echo "Sorry, there is no iso or squashfs-root dir to work with in the current directory."
-        echo "Going back to download ans Ubuntu Mini Iso..."
+        echo -e "Sorry, there is no iso or squashfs-root dir to work with in the current directory.\n"
+             "Going back to download an Ubuntu Mini Iso..."
         sleep 4
         getIso
-    elif [ -f *.iso ] && [ -d squashfs-root ]; then
-        clear
-        echo "Both an iso and squashfs-root are present..."
-        echo "Which do you wish to use?"
-        read -p "1.) `echo *.iso`
+    elif [[ "${list}" != "" ]] && [ -d squashfs-root ]; then
+     clear
+        echo -e "Both an iso and squashfs-root are present...\n"
+                "Which do you wish to use?"
+        read -p "1.) $(echo ./*.iso)
 2.) Use former session: squashfs-root
 3.) Exit
 --> : " ANSR
         while [[ $ANSR != "1" ]] && [[ $ANSR != "2" ]] && \
               [[ $ANSR != "3" ]]
         do
-            read -p "1.) `echo *.iso`
+            read -p "1.) $(echo ./*.iso)
 2.) Use former session: squashfs-root
 3.) Exit
 --> : " ANSR
@@ -121,9 +122,9 @@ main() {
             echo "Squashfs-root directory found. Chrooting to directory."
             sleep 4
             chrootr
-    elif [ -f *.iso ]; then
+    elif [[ "${list}" != "" ]]; then
             clear
-            echo "Iso found; mounting and copying to proper file structure. Then chrooting in..."
+            echo "Iso(s) found. Will mount one and copying to proper file structure. Then will chroot in..."
             sleep 4
             mountAndCopy
             chrootr
@@ -135,13 +136,21 @@ mountAndCopy() {
         mkdir iso/ mnt/
 
     ## Prep filesystem
-        mount -o loop *.iso mnt/
+        isoList=($(find . -maxdepth 1 -name "*.iso" -printf '%P\n'))
+        x=0;
+        for i in "${isoList[@]}"; do
+            echo "$x - ${i}"
+            ((x++))
+        done
+        echo "Chose the ISO from above using the number."
+        read -p "-->: " ANSR
+        echo "You chose :  ${isoList[$ANSR]}"
+        mount -o loop ./"${isoList[$ANSR]}" mnt/
         cp -r mnt/. iso/ && \
         mv iso/casper/filesystem.squashfs .
 
     ## Unspuashfs the squashfs
-        unsquashfs filesystem.squashfs && \
-        rm filesystem.squashfs
+        unsquashfs filesystem.squashfs && rm filesystem.squashfs
 
     ## Cleanup some prep items
         umount mnt/ && rmdir mnt/
@@ -182,7 +191,7 @@ setConfigs() {
 
 
     ## Recreate manifest and clean it  Note: MUST be after all setting changes
-        chroot squashfs-root/ dpkg-query -W --showformat='${Package} ${Version}\n' | sudo tee iso/casper/filesystem.manifest
+        chroot squashfs-root/ dpkg-query -W --showformat="${Package} ${VERSION}\n" | sudo tee iso/casper/filesystem.manifest
         cp -v iso/casper/filesystem.manifest iso/casper/filesystem.manifest-desktop
         for i in $REMOVE
         do
@@ -198,7 +207,7 @@ genSqush() {
 
     ## Write the filesystem.size file, which is needed by the installer:
         chmod 644 iso/casper/filesystem.size
-        printf $(sudo du -sx --block-size=1 squashfs-root/ | cut -f1) > iso/casper/filesystem.size
+        sudo du -sx --block-size=1 squashfs-root/ | cut -f1 > iso/casper/filesystem.size
         chmod 444 iso/casper/filesystem.size
 
     ## Calculate MD5
@@ -209,6 +218,6 @@ genSqush() {
 genIsoImg() {
     ## Generate Iso
         cd iso/
-        sudo mkisofs -D -r -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../${NAME}.iso .
+        sudo mkisofs -D -r -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../"${NAME}".iso .
 }
 rootNisoChk
