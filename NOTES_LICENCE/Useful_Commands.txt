@@ -1,7 +1,9 @@
 ##  Removes all packages but the ones specified and its dependencies
 # !~nubuntu-minimal
-aptitude markauto '~i !~nxserver !~nxserver-xorg !~nxorg !~nlinux-image-generic !~nsquashfs-tools !~ncasper !~naptitude !~napt-get !~napt' -y
-
+aptitude markauto '~i !~nlinux-image-generic !~nubuntu-minimal !~nubuntu-standard !~ncasper !~nlupin-casper !~naptitude !~napt-get !~napt'
+OR
+// NOT EXACT!!!! LOOOK UP
+apt-mark auto '!~nlinux-image-generic !~nubuntu-minimal !~nubuntu-standard !~ncasper !~nlupin-casper !~aptitude'
 
 ##  Get installed pkgs and insert to txt file
 apt list --installed | awk '{print $1}' | cut -f1 -d"/" > installed-list.txt

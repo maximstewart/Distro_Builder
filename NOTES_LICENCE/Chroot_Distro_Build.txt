@@ -28,6 +28,13 @@
         http://archive.ubuntu.com/ubuntu/
         http://archive.ubuntu.com/ubuntu/pool/main/d/debootstrap/
 
+---   SIDE NOTE   ---
+Ubuntu Mini Remix contains:
+- ubuntu-minimal (this is a metapackage, details at https://packages.ubuntu.com/cgi-bin/search_packages.pl?keywords=ubuntu-minimal&searchon=names&subword=1&version=all&release=all)
+- ubuntu-standard (this is a metapackage, details at https://packages.ubuntu.com/cgi-bin/search_packages.pl?keywords=ubuntu-standard&searchon=names&subword=1&version=all&release=all)
+- casper
+- lupin-casper
+
 ##  SETUP DIR STRUCTURE
 *** buildDir is where you are maintaining the squashfs and iso bits
 

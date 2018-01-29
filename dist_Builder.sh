@@ -95,9 +95,9 @@ main() {
         ANSR=""
         while [[ $ANSR != "1" ]] && [[ $ANSR != "2" ]] && [[ $ANSR != "3" ]]; do
             clear
-            echo -e "Both an iso and squashfs-root are present...\n"
+            echo -e "Both an iso(s) and squashfs-root are present...\n" \
                     "Which do you wish to use?\n" \
-                    "1.) $(echo ./*.iso)\n" \
+                    "1.) Use ISO(s)\n" \
                     "2.) Use former session: squashfs-root\n" \
                     "3.) Exit"
             read -p "--> : " ANSR
@@ -202,7 +202,7 @@ setConfigs() {
 
 genSqush() {
     ## Recreate squashfs
-        mksquashfs squashfs-root/ iso/casper/filesystem.squashfs -comp xz -e squashfs-root/boot
+        mksquashfs squashfs-root/ iso/casper/filesystem.squashfs -b 1048576 -comp xz -Xdict-size 100% -e squashfs-root/boot
 
     ## Write the filesystem.size file, which is needed by the installer:
         chmod 644 iso/casper/filesystem.size
