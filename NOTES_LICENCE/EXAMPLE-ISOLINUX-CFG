@@ -12,6 +12,8 @@
 # If you do not use a menu, a 'boot:' prompt will be shown and the system
 # will boot automatically after 5 seconds.
 #
+# Note: A ^ in a label before a character means one can use that to quickly select it.
+#
 #  HELPFUL SOURCES
 # http://www.syslinux.org/wiki/index.php?title=The_Syslinux_Project
 # https://wiki.archlinux.org/index.php/Syslinux
@@ -20,10 +22,13 @@
 # search path for the c32 support libraries (libcom32, libutil etc.)
 PATH
 
+# Need this for images as backgrounds
 DEFAULT vesamenu.c32
+# If 1 it'd present the boot prompt
 PROMPT 0
-TIMEOUT 500
-MENU RESOLUTION 640 480
+# wait 15 seconds
+TIMEOUT 150
+MENU RESOLUTION 1024 768
 MENU BACKGROUND splash.png
 MENU TITLE Sol-OS
 
@@ -40,13 +45,21 @@ MENU COLOR tabmsg       31;40   #30ffffff #00000000 std
 
 ## Menu Options
 LABEL solosLive
-	MENU label Sol-OS Live
+	   MENU label ^Try Sol-OS
+#    kernel /casper/vmlinuz.efi
+#    append  file=/cdrom/preseed/ubuntu.seed boot=casper initrd=/casper/initrd.lz quiet splash ---
 
 LABEL solosInstall
-	MENU label Sol-OS Install
+	   MENU label ^Install Sol-OS
+#    kernel /casper/vmlinuz.efi
+#    append  file=/cdrom/preseed/ubuntu.seed boot=casper only-ubiquity initrd=/casper/initrd.lz quiet splash ---
 
 MENU SEPARATOR
 
+LABEL hd
+    menu label ^Boot from first hard disk
+    localboot 0x80
+
 LABEL reboot
-        MENU LABEL Reboot
-        COM32 reboot.c32
+    MENU LABEL ^Reboot
+    COM32 reboot.c32
