@@ -1,4 +1,4 @@
-# Enable Tab auto complete
+# Enable Tab auto complete  -- must have bash-completion package too
 if [ -f /etc/bash_completion ]; then
  . /etc/bash_completion
 fi
@@ -53,15 +53,28 @@ export LESS_TERMCAP_us=${lightgreen}        # begin underline
 export LESS_TERMCAP_me=${default}${DEFAULT} # end mode
 export LESS_TERMCAP_se=${default}${DEFAULT} # end standout-mode
 export LESS_TERMCAP_ue=${default}${DEFAULT} # end underline
-w3mimg () { w3m -o imgdisplay=/usr/lib/w3m/w3mimgdisplay $1
+
+# Functions
+w3mimg () {
+    w3m -o imgdisplay=/usr/lib/w3m/w3mimgdisplay $1
 }
+
+phpServer () {
+    php -S 127.0.0.1:"$1"
+}
+
+
+# Aliases
 
 # frameebuffer MPLAYER
 alias mplayerfb="mplayer -vo fbdev2 -zoom -x 800 -y 600"
 
-# Python Server
-alias pyServer='python -m SimpleHTTPServer'
+# Python Server && PHP Server
+alias pySimpleServer='python -m SimpleHTTPServer'
+alias pyCgiServer='python -m CGIHTTPServer'
 
+#clear like Windows
+alias cls='clear'
 
 # reboot / halt / poweroff / etc
 alias reboot='sudo /sbin/reboot'
