@@ -75,7 +75,8 @@ Xephyr -resizeable -screen 1920x1080 :10
 
 ## BUILDING FROM AN DEBOOTSTRAP
 ## same location as iso/
-      sudo debootstrap --variant=buildd <code name such as vivid> <chroot path> http://archive.ubuntu.com/ubuntu/
+      sudo debootstrap --components=main,contrib,nonfree --variant=minbase --include=linux-generic,grub-pc,nano,ssh \
+                       --arch=amd64 bionic ./<local dir> http://archive.ubuntu.com/ubuntu/      ## URL is optional or userd for non host target types
                                               OR
       sudo debootstrap --arch=amd64 vivid squashfs-root/   ## For 32bit use --arch=i386
 
