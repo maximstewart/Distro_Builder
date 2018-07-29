@@ -48,7 +48,7 @@ getIso() {
     ## Check if dl iso is wanted then dl it
     if [[ $ANSR == "Y" ]] || [[ $ANSR == "y" ]]; then
         clear
-        echo -e "##  Default Settings Or Set Version And Arch  ##\n" \
+        echo -e "##  Default Settings Or Set Version And Arch #\n" \
                 "Would you like to use the default choices? "
         read -p "(yY/Nn) --> " ANSR
         while [[ $ANSR != "y" ]] && [[ $ANSR != "Y" ]] && \
@@ -79,6 +79,12 @@ getIso() {
             main
         fi
     else
+        mkdir squashfs-root/
+        sudo debootstrap --components=main,contrib,nonfree \
+                         --variant=minbase \
+                         --include=linux-generic,grub-pc,nano,ssh \
+                         --arch=amd64 bionic \
+                         ./squashfs-root/
         main
     fi
 }
