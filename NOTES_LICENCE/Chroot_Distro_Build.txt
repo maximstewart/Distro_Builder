@@ -81,6 +81,7 @@ Xephyr -resizeable -screen 1920x1080 :10
       sudo debootstrap --arch=amd64 vivid squashfs-root/   ## For 32bit use --arch=i386
 
 
+
 ############################
 ####    BUILD PROCESS   ####
 ############################
