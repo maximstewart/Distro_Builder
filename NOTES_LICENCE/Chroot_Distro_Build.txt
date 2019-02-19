@@ -27,6 +27,8 @@
         https://wiki.ubuntu.com/Releases
         http://archive.ubuntu.com/ubuntu/
         http://archive.ubuntu.com/ubuntu/pool/main/d/debootstrap/
+        https://help.ubuntu.com/community/MetaPackages
+        https://askubuntu.com/questions/33413/how-to-create-a-meta-package-that-automatically-installs-other-packages
 
 ---   SIDE NOTE   ---
 Ubuntu Mini Remix contains:
