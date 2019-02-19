@@ -1,0 +1,43 @@
+CREDIT LINK  ::  https://askubuntu.com/questions/33413/how-to-create-a-meta-package-that-automatically-installs-other-packages
+PERSON       ::  ajmitch
+
+A meta-package like this can be created with a tool called equivs which will create a package with just dependency information.
+
+First, create a directory:
+
+mkdir my-metapackage
+cd my-metapackage/
+
+Now run the program:
+
+equivs-control ns-control
+
+It will create a file called ns-control, open this file with your text editor. The control file that you generate should have its Depends or Recommends lines modified to depend on the packages that you want installed:
+
+Section: misc
+Priority: optional
+Standards-Version: 3.9.1
+
+Package: my-metapackage
+Version: 1.0   
+Depends: openssh-server, gedit
+Description: This package installes an ssh server and a text editor
+ The Long description of this package ends with a newline!
+
+(Just an example, you should include more information)
+
+And finally, build the package by running
+
+equivs-build ns-control
+
+Your package is located at my-metapackage/my-metapackage_1.0_all.deb.
+
+If you wish to also create a source package, the --full option can be passed to equivs-build, e.g. equivs-build --full ns-control. This will use debuild & also create .dsc & .tar.gz files.
+
+To create a source .changes file that you can upload to a PPA, extract & build the source package with
+
+dpkg-source -x my-metapackage_1.0.dsc
+cd my-metapackage-1.0
+debuild -S
+
+If the Maintainer that you set in ns-control matches your GPG key, it should build & sign the my-metapackage_1.0_source.changes file for you to dput to your PPA
