@@ -5,7 +5,7 @@ rootNisoChk() {
     if [ "$(id -u)" -eq 0 ]; then
          softChk
     else
-        echo "Sorry, you are not root."
+        echo "Sorry, you need to use sudo."
         exit 1
     fi
 }
@@ -82,7 +82,7 @@ getIso() {
         mkdir squashfs-root/
         sudo debootstrap --components=main,contrib,nonfree \
                          --variant=minbase \
-                         --include=linux-generic,grub-pc,nano,ssh \
+                         --include=linux-generic,grub-pc \
                          --arch=amd64 bionic \
                          ./squashfs-root/
         main
@@ -185,7 +185,28 @@ chrootr() {
         umount -lf sys/
         cd ..
 
-    setConfigs
+
+
+        ANSR=""
+        while [[ $ANSR != "1" ]] && [[ $ANSR != "2" ]] && [[ $ANSR != "3" ]]; do
+            clear
+            echo -e "Are you using an extracted Ubuntu's iso/ or Boot_Structure/ folder?\n" \
+                    "Which do you wish to use?\n" \
+                    "1.) Use Ubuntu's\n" \
+                    "2.) Use Boot_Structure/\n" \
+                    "3.) Exit"
+            read -p "--> : " ANSR
+        done
+
+        if [[ $ANSR == "1" ]]; then
+            setConfigs
+        elif [[ $ANSR == "2" ]]; then
+             genSqush
+        elif [[ $ANSR == "3" ]]; then
+             exit
+        fi
+
+
 }
 
 setConfigs() {
@@ -203,10 +224,30 @@ setConfigs() {
         for i in $REMOVE; do
               sed -i "/${i}/d" iso/casper/filesystem.manifest-desktop
         done
-    genSqush
+
+    genSqushUbuntu
 }
 
 genSqush() {
+    ## Recreate squashfs
+        mksquashfs squashfs-root/ Boot_Structure/images/filesystem.squashfs -b 1048576 -comp xz -Xdict-size 100% -e squashfs-root/boot
+
+    ## Write the filesystem.size file, which is needed by the installer:
+        sudo du -sx --block-size=1 squashfs-root/ | cut -f1 > Boot_Structure/casper/filesystem.size
+        chmod 444 Boot_Structure/casper/filesystem.size
+
+    ## Calculate MD5
+        (cd Boot_Structure/ && find . -type f -print0 | xargs -0 md5sum | grep -v "\./md5sum.txt" > SHA256SUMS)
+    genIsoImg
+}
+
+genIsoImg() {
+    ## Generate Iso
+        cd Boot_Structure/
+        ./makeIso.sh
+}
+
+genSqushUbuntu() {
     ## Recreate squashfs
         mksquashfs squashfs-root/ iso/casper/filesystem.squashfs -b 1048576 -comp xz -Xdict-size 100% -e squashfs-root/boot
 
@@ -217,14 +258,15 @@ genSqush() {
 
     ## Calculate MD5
         (cd iso && find . -type f -print0 | xargs -0 md5sum | grep -v "\./md5sum.txt" > SHA256SUMS)
-    genIsoImg
+    genIsoImgUbuntu
 }
 
-genIsoImg() {
+genIsoImgUbuntu() {
     ## Generate Iso
         cd iso/
         sudo mkisofs -D -r -cache-inodes -J -l -b isolinux/isolinux.bin -c \
         isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o \
                                                              ../"${NAME}".iso .
 }
+
 rootNisoChk
