@@ -21,6 +21,7 @@ Standards-Version: 3.9.1
 Package: my-metapackage
 Version: 1.0   
 Depends: openssh-server, gedit
+Provides: openssh-server, gedit
 Description: This package installes an ssh server and a text editor
  The Long description of this package ends with a newline!
 
