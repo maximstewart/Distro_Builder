@@ -10,10 +10,13 @@
 function main() {
     echo "Creating the ISO file..."
     cd image/
+
+    # Take note of the ending dot when changing this...
     sudo mkisofs -r -V "${OS_NAME}" -cache-inodes -J -l \
-        -b isolinux/isolinux.bin \
-        -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 \
-        -boot-info-table -o ../"${OS_NAME}".iso .
+        -boot-info-table -no-emul-boot -boot-load-size 4 \
+        -b isolinux/isolinux.bin -c isolinux/boot.cat \
+        -o ../"${OS_NAME}".iso .
+
     cd ..
 }
 
