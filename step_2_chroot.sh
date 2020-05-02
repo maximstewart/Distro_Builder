@@ -16,9 +16,9 @@ function main() {
 
     clear
     # Mount stuff
-    sudo mount -o /dev "${CHROOT_PTH}"/dev/
-    sudo mount -t proc proc proc/
-    sudo mount -t sysfs sys sys/
+    sudo mount --bind /dev "${CHROOT_PTH}"/dev/
+    sudo mount -t proc proc "${CHROOT_PTH}"/proc/
+    sudo mount -t sysfs sys "${CHROOT_PTH}"/sys/
 
     # setup some configs stuff for internetz
     sudo cp /etc/hosts "${CHROOT_PTH}"/etc/hosts
@@ -32,7 +32,7 @@ function main() {
     sudo chroot "${CHROOT_PTH}"
 
     # cleanup
-    sudo umount -lf "${CHROOT_PTH}"/dev/
+    sudo umount "${CHROOT_PTH}"/dev/
     sudo umount -lf "${CHROOT_PTH}"/proc/
     sudo umount -lf "${CHROOT_PTH}"/sys/
 }

@@ -57,10 +57,11 @@ function chroot_big_dump_mesage() {
     echo "\nRun once in chroot:"
     echo "\tapt-get update"
     echo "\tapt-get install --yes dbus"
-    echo "\tapt-get --yes upgrade"
     echo "\tdbus-uuidgen > /var/lib/dbus/machine-id"
     echo "\tdpkg-divert --local --rename --add /sbin/initctl"
+    echo "\tapt-get --yes upgrade"
 
+    echo "Note: You probably should copy to a notepad the following..."
     echo "\nThere is a current (for Karmic, ..., Precise) issue with services running in a chroot:"
     echo "\thttps://bugs.launchpad.net/ubuntu/+source/upstart/+bug/430224."
     echo "\nA workaround is to link /sbin/initctl to /bin/true:"
@@ -69,5 +70,9 @@ function chroot_big_dump_mesage() {
     echo "\nInstall packages needed for Live System (I think 'ubuntu-standard' package is optional.):"
     echo "\tapt-get install --yes casper lupin-casper"
     echo "\tapt-get install --yes discover laptop-detect os-prober"
+    echo "\nTo actually install the system you'll need one of the following or something similar..."
     echo "\tapt-get install --yes linux-generic"
+    echo "\tapt-get install --yes ubiquity-frontend-gtk"
+    echo "\t\tOR"
+    echo "\tapt-get install --yes ubiquity-frontend-kde"
 }
