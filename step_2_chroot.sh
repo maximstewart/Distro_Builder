@@ -9,6 +9,11 @@
 
 # Debootstrap process
 function main() {
+    ansr=$(confirm_dialouge "Launch Xephyr preview window?\n Resolution: ${RES} Window ID: ${ID}")
+    if [[ $ansr -eq 0 ]]; then
+        Xephyr -resizeable -screen "${RES}" "${ID}" &
+    fi
+
     sudo mount --bind /dev "${CHROOT_PTH}"/dev
 
     sudo cp /etc/hosts "${CHROOT_PTH}"/etc/hosts
@@ -16,6 +21,9 @@ function main() {
     sudo sed s/$SYSTEM_RELEASE/$RELEASE/ < /etc/apt/sources.list > "${CHROOT_PTH}"/etc/apt/sources.list
 
     sudo chroot "${CHROOT_PTH}"
+
+    # cleanup
+    sudo umount "${CHROOT_PTH}"/dev
 
 
     # ----  OLD SETUP  ---- #

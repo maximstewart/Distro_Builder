@@ -9,6 +9,6 @@
 
 # Debootstrap process
 function main() {
-    sudo debootstrap --arch=$ARCH $RELEASE chroot
+    sudo debootstrap --arch=$ARCH $RELEASE "${CHROOT_PTH}"
 }
 main $@;

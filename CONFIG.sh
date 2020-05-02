@@ -6,14 +6,6 @@ shopt -s expand_aliases
 alias echo="echo -e"
 
 
-# The system release version working from
-function set_system_release() {
-    IN=$(cat /etc/os-release | grep "VERSION_CODENAME")
-    ARRY=(${IN//=/ })
-    SYSTEM_RELEASE="${ARRY[1]}"
-}
-
-
 # ----  Setup Variables  ---- #
 
 SCRIPT_PATH="$( cd "$(dirname "")" >/dev/null 2>&1 ; pwd -P )";
@@ -52,9 +44,41 @@ LIVE_USER=""
 # ----  Call CONFIG Methods Here As Needed  ---- #
 set_system_release;
 cd "${SCRIPT_PATH}";
+echo "Base Dir: " $(pwd) "\n";
+
+# Make work structure
+mkdir -p "${CHROOT_PTH}"
+mkdir -p image/{casper,isolinux,install}
+
+
+
 
 
 # ----  DO NOT CHANGE OR REMOVE UNLESS YOU KNOW WHAT YOU ARE DOING  ---- #
 
 # Clean manifest-desktop file of unneeded parts
 REMOVE='ubiquity ubiquity-frontend-gtk ubiquity-frontend-kde casper lupin-casper live-initramfs user-setup discover1 xresprobe os-prober libdebian-installer4'
+
+
+# The system release version working from
+function set_system_release() {
+    IN=$(cat /etc/os-release | grep "VERSION_CODENAME")
+    ARRY=(${IN//=/ })
+    SYSTEM_RELEASE="${ARRY[1]}"
+}
+
+function confirm_dialouge() {
+    echo $1
+    read -p "(yY/Nn) --> " ANSR
+    while [[ $ANSR != "y" ]] && [[ $ANSR != "Y" ]] && \
+          [[ $ANSR != "n" ]] && [[ $ANSR != "N" ]]
+    do
+        read -p "(yY/Nn) --> " ANSR
+    done
+
+    if [[ $ANSR == "n" ]] || [[ $ANSR == "N" ]]; then
+        return 1
+    fi
+
+    return 0
+}
