@@ -1,0 +1,39 @@
+#!/bin/sh
+# PekWM start file
+# This file is a simple shell script; It gets run on pekwm startup, after
+# the theme and all config has loaded if it is set executable
+# (chmod +x start).
+#
+# This is different from ~/.xinitrc because a normal configuration of
+# .xinitrc you'll run all commands, then launch the window manager last.
+#
+# It also gets re-run every time pekwm/openbox is restarted.
+
+
+#exec megasync &
+#exec mate-settings-daemon --replace &
+#exec xset led 3 &
+#exec spacefm --desktop &
+#exec xfce4-panel &
+
+# Bypass mate panels without moving binary
+#exec mate-panel --replace &
+#exec killall mate-panel &
+# exec ~/.screenlayout/main.sh &
+
+
+exec xcompmgr &
+nitrogen --restore &
+sleep 2
+exec $HOME/.animatedBGstarter.sh &
+sleep 1
+exec $HOME/.animatedBGstarter2.sh &
+sleep 1
+exec stjerm -k f8 -o 50 -fg 00e8ff -ah 0 -p left -h 800 -w 700 -st always &
+exec stjerm -k f9 -o 50 -fg 00e8ff -ah 0 -p right -h 800 -w 700 -st always  &
+exec stjerm -k f12 -o 50 -fg 00e8ff -ah 0 -p top -h 500 -w 700 -st always &
+exec stjerm -k f10 -o 50 -fg 00e8ff -ah 0 -p bottom -h 500 -w 700 -st always &
+exec devilspie &
+exec pytop &
+exec SpiderOakONE &
+exec bash -c "play $HOME/.greetings.mp3 fade t 0 8 6" &

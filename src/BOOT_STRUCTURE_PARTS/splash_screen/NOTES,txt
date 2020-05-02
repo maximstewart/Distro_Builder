@@ -1,0 +1,41 @@
+Boot Instructions for the Remix User
+
+To give some boot-time instructions to the user create an isolinux.txt file in image/isolinux, for example:
+
+************************************************************************
+
+This is an Ubuntu Remix Live CD.
+
+For the default live system, enter "live".  To run memtest86+, enter "memtest"
+
+************************************************************************
+
+
+Splash Screen
+
+A graphic can be displayed at boot time, but it is optional.
+The example text above requires a special character along with
+the file name of the splash image (splash.rle).
+To create that character, do the following use the following command:
+
+printf "\x18" >emptyfile
+
+and then edit the emptyfile with any text editor. Add the file name just next to the
+first character and add the text you want to display at boot time beneath it and save the file as "isolinux.txt"
+
+To create the splash.rle file, create an image 480 pixels wide. Convert it to 15 colours,
+indexed (perhaps using GIMP) and "Save As" to change the ending to .bmp which converts the
+image to a bitmap format.
+
+
+----    IN GIMP DO THE FOLLOWING    ----
+1. Open an image.
+2. Scake it to 480 and make sure hight is bound to it.
+3. Go to image > mode > indexed (Set minimum number of colors to 15 if you have issues down he road Otherwise leave it as is.)
+5. Save As a BMP. When doing so set compatibility options on for 'Do not write color space information'
+
+
+Then install the "netpbm" and 'syslinux-utils' packages and run
+
+1.  bmptoppm splash.bmp > splash.ppm
+2.  ppmtolss16 '#ffffff=7' < splash.ppm > splash.rle

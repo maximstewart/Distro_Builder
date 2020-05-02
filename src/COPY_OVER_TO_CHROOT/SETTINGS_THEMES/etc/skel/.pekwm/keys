@@ -1,0 +1,16 @@
+INCLUDE = "vars"
+
+Global {
+# - - ----------------------------------------------- - -
+# Simple bindings to most frequently used actions.
+#
+# Adding your own frequently used actions is easy -
+# just copy it over from CHAINS and edit the keypress!
+
+ #Arp Crunch Apps
+    Keypress = "Mod4 m" { Actions = "ShowMenu GotoClient True" }
+    Keypress = "Mod4 r" { Actions = "Exec terminator -x sudo reboot &" }
+    Keypress = "Mod4 l" { Actions = "Exec i3lock -c 000000" }
+    Keypress = "Mod4 s" { Actions = "Exec terminator -x sudo poweroff &" }
+    Keypress = "Mod4 t" { Actions = "Exec terminator &" }
+}

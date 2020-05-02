@@ -1,2 +1,17 @@
-# Distro-Builder
-This is a powerful and easy way to build distributions with chroot and Xephyr at its core. A base iso download option is available to work with as well. This script handles everything up to chroot and after leaving the meat of the build to be handled by the pre defined automation script or ones own automation scripts.
+# Distro Builder
+This is a powerful and easy way to build ubuntu remix distributions with
+debootstrap, chroot, and Xephyr at its core. These scripts handle everything
+up to chroot and after while leaving the fun and meaty parts of the build to
+be handled by the user.
+
+# Notes
+Check the CONFIG.sh file for important variables that need to be set.
+
+# Updates
+n/a
+
+# TODO
+* Create Chroot script pipline again.
+
+# Images
+![1 Distro Builder menu. ](images/pic1.png)

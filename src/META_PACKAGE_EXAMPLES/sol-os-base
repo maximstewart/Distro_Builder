@@ -1,0 +1,18 @@
+### Commented entries have reasonable defaults.
+### Uncomment to edit them.
+# Source: sol-os-base-src
+Section: misc
+Priority: optional
+Homepage: https://www.itdominator.com/
+Standards-Version: 3.9.2
+
+Package: sol-os-base
+Version: 0.0.1
+Maintainer: Maxim Stewart <maximstewart1@gmail.com>
+Depends: adduser,apt,apt-utils,bzip2,console-setup,debconf,eject,gnupg,ifupdown,initramfs-tools,iproute2,iputils-ping,isc-dhcp-client,kbd,kmod,less,locales,makedev,mawk,net-tools,netbase,netcat-openbsd,passwd,procps,python3,resolvconf,rsyslog,sudo,tzdata,ubuntu-keyring,udev,ureadahead,whiptail,
+    nano,p7zip,zip,p7zip-rar,rar,unrar-free,htop,iftop,mc,tree
+Provides: adduser,apt,apt-utils,bzip2,console-setup,debconf,eject,gnupg,ifupdown,initramfs-tools,iproute2,iputils-ping,isc-dhcp-client,kbd,kmod,less,locales,makedev,mawk,net-tools,netbase,netcat-openbsd,passwd,procps,python3,resolvconf,rsyslog,sudo,tzdata,ubuntu-keyring,udev,ureadahead,whiptail,
+    nano,p7zip,zip,p7zip-rar,rar,unrar-free,htop,iftop,mc,tree
+Architecture: amd64
+Description: Sol-OS: A minimal OS
+    Sol-OS is a minimal OS keeping things simple and light weight. This meta-package installs the base programs that are needed for general system functions.

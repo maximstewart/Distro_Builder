@@ -1,2 +1,0 @@
-#!/usr/bin/bash
-INSERT GPG KEY RETRIEVAL HERE

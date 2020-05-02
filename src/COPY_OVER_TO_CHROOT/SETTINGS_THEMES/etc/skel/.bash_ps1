@@ -1,0 +1,7 @@
+# Week Day/Month/Day : Time -- user@group -- current dir path
+export PS1="${lightyellow}  _   _   _   _   _   _
+ / \ / \ / \ / \ / \ / \ 
+( S ( o ( l ( - ( O ( S )
+ \_/ \_/ \_/ \_/ \_/ \_/ ${default}
+${lightred}Welcome to the dark side of the moon, \u!${default}
+\[\e[32m\]\d\[\e[m\]: \[\e[36m\]\@\[\e[m\] -- \[\e[31m\]\u\[\e[m\]@\[\e[31m\]\h\[\e[m\] -- \[\e[35m\]\w\[\e[m\] \\$ "

@@ -1,0 +1,19 @@
+background_style	tile
+background_color	#141414
+input_panel_x			50%
+input_panel_y			50%
+input_name_x			22
+input_name_y			74
+input_pass_x			22
+input_pass_y			114
+input_font				Munica Regular:size=6:dpi=90
+input_color				#000000
+username_x				-1
+username_y				-1
+password_x				-1
+password_y				-1
+#does not work...
+msg_x							105
+msg_y							21
+msg_color					#a5e12d
+msg_font 					Munica Regular:size=6:dpi=90
