@@ -21,7 +21,6 @@ function main() {
     case $ANSR in
         "1" )  isolinux_text_boot; break;;
         "2" ) isolinux_gui_boot; break;;
-        * ) echo "Don't know how you got here but that's a bad sign..."; break;;
     esac
 
     echo "Creating manifest..."
@@ -76,9 +75,8 @@ function create_manifest() {
     sudo chroot ${CHROOT_PTH} dpkg-query -W --showformat='${Package} ${Version}\n' | sudo tee image/casper/filesystem.manifest
     sudo cp -v image/casper/filesystem.manifest image/casper/filesystem.manifest-desktop
     REMOVE='ubiquity ubiquity-frontend-gtk ubiquity-frontend-kde casper lupin-casper live-initramfs user-setup discover1 xresprobe os-prober libdebian-installer4'
-    for i in $REMOVE
-    do
-            sudo sed -i "/${i}/d" image/casper/filesystem.manifest-desktop
+    for i in $REMOVE; do
+        sudo sed -i "/${i}/d" image/casper/filesystem.manifest-desktop
     done
 }
 
@@ -102,7 +100,6 @@ cat <<EOF > image/README.diskdefines
 #define TOTALNUM  0
 #define TOTALNUM0  1
 EOF
-
 }
 
 function remix_recognition() {
