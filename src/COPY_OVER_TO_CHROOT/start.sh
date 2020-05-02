@@ -34,6 +34,8 @@ function main() {
         "0" ) exit;;
         * ) echo "Don't know how you got here but that's a bad sign...";;
     esac
+
+    main;
 }
 
 
@@ -58,21 +60,18 @@ function get_live_iso_dependencies() {
     echo "\t2) ubiquity-frontend-kde"
     echo "\t0) nethier..."
     read -p "--> : " ANSR
-    while [[ $ANSR != "0" ]] && [[ $ANSR != "1" ]] && \
-                                [[ $ANSR != "2" ]]; do
+    while [[ $ANSR != "0" ]] && [[ $ANSR != "1" ]] && [[ $ANSR != "2" ]]; do
         read -p "--> : " ANSR
     done
     case $ANSR in
-        "0" ) apt-get install --yes ubiquity-frontend-gtk --no-install-recommends --no-install-suggests
-                break;;
-        "1" ) apt-get install --yes ubiquity-frontend-kde --no-install-recommends --no-install-suggests
-                break;;
-        "2" ) break;;
+        "0" ) apt-get install --yes ubiquity-frontend-gtk --no-install-recommends --no-install-suggests;;
+        "1" ) apt-get install --yes ubiquity-frontend-kde --no-install-recommends --no-install-suggests;;
+        "2" ) return;;
     esac
 }
 
 
-#-------------------------------Bellow Installs the main system------------------------#
+# -------------------------------Bellow Installs the main system------------------------ #
 
 ######################## Main Desktop ########################
 function base() {
@@ -83,10 +82,9 @@ function base() {
     # gparted gdebi sox udisks2 iftop htop tree hardinfo libsox-fmt-all onboard mc \
     # oracle-java8-installer -y
 
-apt-get autoremove --purge -y && apt-get autoclean
+    apt-get autoremove --purge -y && apt-get autoclean
 
-####  Change bellow mate-core to other if
-####  one wants different window managers
+#### Change bellow mate-core to other if one wants different window managers
 #### Above is mostly common base system stuff
     apt-get install mate-core spacefm-gtk3 --no-install-recommends ulauncher -y
     apt-get remove caja mate-terminal -y
