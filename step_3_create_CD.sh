@@ -21,7 +21,7 @@ function main() {
     echo "Creating MD5 data..."
     md5_cal;
     echo "Creating the ISO file..."
-    create_iso;
+    createIso;
 }
 
 function move_iso_linux_parts() {
@@ -93,7 +93,7 @@ function md5_cal() {
     exit
 }
 
-function create_iso() {
+function createIso() {
     cd image/
     sudo mkisofs -r -V "${OS_NAME}" -cache-inodes -J -l \
         -b isolinux/isolinux.bin \
