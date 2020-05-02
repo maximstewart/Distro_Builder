@@ -34,6 +34,8 @@ function main() {
         "0" ) exit;;
         * ) echo "Don't know how you got here but that's a bad sign...";;
     esac
+
+    main;
 }
 
 function do_all_run() {

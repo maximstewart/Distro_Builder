@@ -14,7 +14,7 @@ rm -rf /tmp/*
 rm /etc/resolv.conf
 
 # Remove old kernels
-dpkg -l 'linux-*' | sed '/^ii/!d;/hwe/d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | xargs sudo apt -y purge; update-grub
+# dpkg -l 'linux-*' | sed '/^ii/!d;/hwe/d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | xargs sudo apt -y purge; update-grub
 
 rm /sbin/initctl
 dpkg-divert --rename --remove /sbin/initctl

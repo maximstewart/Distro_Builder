@@ -56,6 +56,6 @@ function start_menu_mesage() {
     echo "\t8)  Install Office Apps"
     echo "\t9)  Install Debs"
     echo "\t10) Transfer Setting"
-    echo "\11) Cleanup (Should run before exiting chroot.)"
+    echo "\t11) Cleanup (Should run before exiting chroot.)"
     echo "\t0) EXIT"
 }
