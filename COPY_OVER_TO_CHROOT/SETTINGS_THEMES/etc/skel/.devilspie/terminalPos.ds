@@ -1,0 +1,11 @@
+; generated_rule terminalPos
+( if
+( begin
+( is ( application_name ) "LEFT_TERM" )
+)
+( begin
+( pin )
+( geometry "726x830+0+130" )
+( println "match" )
+)
+)

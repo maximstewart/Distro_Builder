@@ -1,0 +1,11 @@
+# Launchpad Config Parts
+export DEBFULLNAME="Maxim Stewart"
+export DEBEMAIL="1itdominator@gmail.com"
+
+shopt -s cdspell
+shopt -s autocd shift_verbose
+shopt -s dirspell
+
+export NVM_DIR="/home/abaddon/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

@@ -1,0 +1,4 @@
+export PATH="$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:$HOME/Portable_Apps/local_bin/JavaProjGenerator:$HOME/Portable_Apps/local_bin/AnimeFreakDL:$HOME/Portable_Apps/local_bin/media-downloader:$HOME/Portable_Apps/local_bin/path-edit:$HOME/Portable_Apps/local_bin/bash_scripts:$HOME/Portable_Apps/local_bin/pyCornea/src:$HOME/.local/bin:$HOME/Portable_Apps/local_bin/DarkCrypt:$HOME/Portable_Apps/selenium Drivers:$HOME/Portable_Apps/local_bin/shellmen"
+
+
+

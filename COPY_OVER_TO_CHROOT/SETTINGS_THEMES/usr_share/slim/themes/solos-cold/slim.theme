@@ -1,0 +1,24 @@
+# Cold Space theme for SLiM
+# Aleksandrina Nikolova
+
+# Messages 
+msg_color               #727b80
+msg_font                Verdana:size=16:bold
+msg_shadow_xoffset	1
+msg_shadow_yoffset	1
+msg_shadow_color  	#383838
+
+# Screen background style. Valid values: stretch, tile
+background_style        stretch
+
+# Input controls
+input_panel_x           81%
+input_panel_y           10%
+input_name_x            124
+input_name_y            32
+input_pass_x            124
+input_pass_y            79
+
+input_font          	Verdana:italic:size=11
+input_color		#727b80
+input_bgcolor           #727b80

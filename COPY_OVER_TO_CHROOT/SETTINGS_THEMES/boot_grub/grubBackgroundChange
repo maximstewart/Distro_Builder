@@ -1,0 +1,8 @@
+1. Edit /etc/default/grub
+	Add GRUB_BACKGROUND="15.jpg"
+
+2. Add an image to /boot/grub/
+
+3. sudo update-grub
+
+4. Done

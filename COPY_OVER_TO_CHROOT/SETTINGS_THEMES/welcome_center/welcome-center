@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+#
+# Author: Maxim Stewart (gamer111@gmail.com)
+# Copyright (C) 2014 Maxim Stewart
+
+import gtk, gobject, time, webkit, os, subprocess
+
+class Main:
+    def __init__(self):
+        ## setup of variables and outting pids
+        crntDir = os.getcwd()
+        os.chdir(crntDir)
+        os.chdir("resources/bin/")
+        cmd = ["busybox", "httpd", "-p", "36837", "-f", "-h", "../"]
+        progPid = os.getpid()
+        spPid = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        file = open("../cgi-bin/pids", 'w')
+        file.write(str(progPid) + '\n' + str(spPid.pid))
+        file.close()
+
+        ## build window
+        builder = gtk.Builder()
+        builder.add_from_file("../welcome-center.glade")
+        builder.connect_signals(self)
+        builder.get_object("Main").show_all()
+        self.scrolledwindow = builder.get_object("scrolledwindow")
+        self.webview = webkit.WebView()
+        self.scrolledwindow.add(self.webview)
+        self.webview.show()
+        self.webview.open("http://localhost:36837/")
+
+
+app = Main()
+gtk.main()

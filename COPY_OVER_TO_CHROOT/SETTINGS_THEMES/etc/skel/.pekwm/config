@@ -1,0 +1,39 @@
+INCLUDE = "$_PEKWM_ETC_PATH/config_system"
+
+Files {
+    Theme = "/usr/share/pekwm/themes/vista_black"
+}
+
+Screen {
+    Workspaces = "3"
+    WorkspacesPerRow = "3"
+    WorkspaceNames = "01;02;03;"
+	Placement {
+		Model = "MouseCentered"
+		WorkspacePlacements = "CenteredOnParent;MouseCentered"
+		TransientOnParent = "True"
+		WorkspaceIndicatorOpacity = "50"
+		Smart {
+			Row = "False"
+			OffsetX = "0"
+			OffsetY = "0"
+		}
+	}
+
+Menu {
+    DisplayIcons = "True"
+    UnfocusOpacity = "50"
+    Icons = "Final Order" {
+        Minimum = "16x16"
+        Maximum = "16x16"
+    }
+
+Files {
+    Keys = "~/.pekwm/keys"
+    Mouse = "~/.pekwm/mouse"
+    Menu = "~/.pekwm/menu"
+    Start = "~/.pekwm/start"
+    AutoProps = "~/.pekwm/autoproperties"
+    Theme = "/usr/share/pekwm/themes/vista_black"
+    Icons = "~/.pekwm/icons/"
+}

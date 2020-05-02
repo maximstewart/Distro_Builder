@@ -1,0 +1,9 @@
+To Install and use this orangeCity theme::
+1. copy (as root) this folder to /usr/share/slim/themes
+
+2. edit /etc/slim.conf
+change current_theme to orangeCity_1920 (around line 84 or so)
+
+3. SAVE
+
+4. logout to check theme

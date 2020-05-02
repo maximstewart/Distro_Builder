@@ -1,0 +1,198 @@
+# Menu config for pekwm
+
+# Variables
+INCLUDE = "vars"
+
+RootMenu = "(----)" {
+	Separator {}
+	Submenu = "(--Main--)" {
+	Separator {}
+
+	Submenu = "[--System--]" {
+	Separator {}
+		Submenu = "[--Settings--]" {
+		Entry = "Gufw[Firewall-Mngr]" { Actions = "Exec gksu gufw &" }
+		Entry = "Wicd[Netwrk-Mngr]" { Actions = "Exec terminator -x wicd-curses &" }
+		Entry = "DSL/PPPoE configuration tool" { Actions = "Exec xterm -e pppoeconf &" }
+		Entry = "LXAppearance" { Actions = "Exec lxappearance &" }
+		Entry = "Nitrogen" { Actions = "Exec nitrogen &" }
+		Entry = "ARandR" { Actions = "Exec arandr &" }
+		Entry = "Nvidia Settings" { Actions = "Exec gksu nvidia-settings &" }
+		}
+	Separator {}
+		Entry = "Synaptic Package Manager" { Actions = "Exec x-terminal-emulator -e synaptic-pkexec &" }
+		Entry = "Aptitude Package Manager (text)" { Actions = "Exec terminator -x aptitude-curses &" }
+		Entry = "PlayOnLinux" { Actions = "Exec playonlinux &" }
+		Entry = "VirtualBox" { Actions = "Exec virtualbox &" }
+		Entry = "GParted" { Actions = "Exec su-to-root -X -c /usr/sbin/gparted &" }
+		Entry = "Bleachbit[Su]" { Actions = "Exec gksu bleachbit &" }
+		Entry = "Bleachbit" { Actions = "Exec bleachbit &" }
+		Entry = "Orphaner (libs)" { Actions = "Exec xterm -e su-to-root -c /usr/sbin/orphaner &" }
+		Entry = "Gdebi[Pkg-Installer]" { Actions = "Exec gksu gdebi &" }
+		Entry = "Ubuntu Builder" { Actions = "Exec ubuntu-builder &" }
+		Entry = "Htop" { Actions = "Exec xterm -e htop &" }
+
+
+
+	}
+
+	Separator {}
+
+	Submenu = "[--Multimedia--]" {
+		Entry = "SMPlayer2[Movie-Player]" { Actions = "Exec smplayer2 &" }
+		Entry = "Aegisub[SubTitleEditor]" { Actions = "Exec aegisub-3.0 &" }
+		Entry = "SubDownloader" { Actions = "Exec subdownloader &" }
+		Entry = "DeadBeef[Music-Player]" { Actions = "Exec /opt/deadbeef/bin/deadbeef &" }
+		Entry = "OpenShot[Video-Editor]" { Actions = "Exec openshot &" }
+		Entry = "SimpleScreenRecorder" { Actions = "Exec simplescreenrecorder --logfile &" }
+		Entry = "Guvcview[WebCam]" { Actions = "Exec guvcview &" }
+		Entry = "Pavucontrol[Audio-Ctrls]" { Actions = "Exec pavucontrol &" }
+	}
+
+	Separator {}
+
+	Submenu = "[--Office--]" {
+		Entry = "LibreOffice" { Actions = "Exec libreoffice &" }
+		Entry = "LibreOffice-Writer" { Actions = "Exec libreoffice --writer &" }
+		Entry = "LibreOffice-Impress" { Actions = "Exec libreoffice --impress &" }
+		Entry = "LibreOffice-Calc" { Actions = "Exec libreoffice --calc &" }
+		Entry = "Sumatra[Pdf & Ebook-Viewer]" { Actions = "Exec /usr/sbin/sumatra &" }
+	}
+
+	Separator {}
+
+	Submenu = "[--Graphics--]" {
+		Entry = "The GIMP[Img-Editor]" { Actions = "Exec gimp &" }
+		Entry = "ImageMagick[Img-Editor]" { Actions = "Exec display.im6 logo: &" }
+		Entry = "Mirage[Img-Viewer]" { Actions = "Exec mirage &" }
+	}
+
+	Separator {}
+
+	Submenu = "[--Internet--]" {
+		Entry = "Firefox[Web]" { Actions = "Exec firefox &" }
+		Entry = "FileZilla[FTP-Client]" { Actions = "Exec filezilla &" }
+		Entry = "QBittorrent" { Actions = "Exec qbittorrent &" }
+		Entry = "Xchat[IRC]" { Actions = "Exec xchat &" }
+		Entry = "Skype" { Actions = "Exec skype &" }
+	}
+
+	Separator {}
+
+	Submenu = "[--Games--]" {
+			Entry = "Steam" { Actions = "Exec steam &" }
+			Entry = "DOSBox" { Actions = "Exec dosbox &" }
+			Entry = "GtkBoard" { Actions = "Exec gtkboard &" }
+			Entry = "PrBoom+" { Actions = "Exec prboom-plus &" }
+			Entry = "Freedoom-Phase 1" { Actions = "Exec /usr/games/freedoom1 &" }
+			Entry = "Freedoom-Phase 2" { Actions = "Exec /usr/games/freedoom2 &" }
+
+
+	}
+
+	Separator {}
+
+	Submenu = "[--Accessories--]" {
+		Entry = "SpaceFM[File-Mngr]" { Actions = "Exec spacefm &" }
+		Entry = "SpaceFM-File Search" { Actions = "Exec spacefm --find-files &" }
+		Entry = "PyRenamer[Bulk File Re-name]" { Actions = "Exec pyrenamer &" }
+		Entry = "Midnight-Commander[File-Mngr]" { Actions = "Exec terminator -x mc &" }
+		Entry = "Ranger[File-Mngr]" { Actions = "Exec xterm -e ranger &" }
+		Entry = "Galculator" { Actions = "Exec galculator &" }
+		Entry = "Leafpad" { Actions = "Exec leafpad &" }
+		Entry = "Nano[Text Editor]" { Actions = "Exec terminator -x nano &" }
+		Entry = "Xarchiver" { Actions = "Exec xarchiver &" }
+		Entry = "QuickSynergy" { Actions = "Exec quicksynergy &" }
+		Entry = "Terminator[Terminal]" { Actions = "Exec terminator &" }
+		Entry = "Xterm" { Actions = "Exec xterm &" }
+		Entry = "Screenshot" { Actions = "Exec xfce4-screenshooter &" }
+	}
+
+	Separator {}
+
+	Submenu = "[--Development--]" {
+		Entry = "Geany[IDE-Like-TextEditor]" { Actions = "Exec geany &" }
+	}
+}
+	Submenu = "(--Pekwm--)" {
+		Submenu = "Themes" {
+			Entry { Actions = "Dynamic $_PEKWM_SCRIPT_PATH/pekwm_themeset.sh $_PEKWM_THEME_PATH" }
+			Entry { Actions = "Dynamic $_PEKWM_SCRIPT_PATH/pekwm_themeset.sh ~/.pekwm/themes" }
+		}
+		Entry = "Reload" { Actions = "Reload" }
+		Entry = "Restart" { Actions = "Restart" }
+		Entry = "Exit" { Actions = "Exit" }
+	}
+	Separator {}
+		Entry = "Firefox[Web]" { Actions = "Exec firefox &" }
+		Entry = "Spacefm[File-Mngr]" { Actions = "Exec spacefm &" }
+		Entry = "Terminator[Terminal]" { Actions = "Exec terminator &" }
+		Submenu = "(--Desktop Features & Other--)" {
+			Entry = "Idesk[DesktopIconStarter]" { Actions = "Exec idesk &" }
+			Entry = "Idesk[DesktopIconStopper]" { Actions = "Exec terminator -x pkill idesk &" }
+			Entry = "Idesk[IconMaker]" { Actions = "Exec terminator -x $HOME/Desktop/idesk.sh &" }
+			Entry = "Keyboard Backlight On" { Actions = "Exec xset led 3 &" }
+			Entry = "Keyboard Backlight Off" { Actions = "Exec xset -led 3 &" }
+		}
+	Separator {}
+	Submenu = "(--Go to--)" {
+		SubMenu = "Workspace" {
+			# Create goto menu once per pekwm config reload. The fast way that
+			# will work for most if not all users.
+			COMMAND = "$_PEKWM_SCRIPT_PATH/pekwm_ws_menu.sh goto"
+			# Create goto menu every time the menu is opened. The slow way.
+			# This is what you want if you are using external tools to make
+			# the amount of workspaces something else than what you define in
+			# ~/.pekwm/config. You will know if you want this.
+			# Entry = "" { Actions = "Dynamic $_PEKWM_SCRIPT_PATH/pekwm_ws_menu.sh goto dynamic" }
+		}
+		Entry = "Window.." { Actions = "ShowMenu GotoClient True" }
+	}
+}
+
+WindowMenu = "Window Menu" {
+	Entry = "(Un)Stick" { Actions = "Toggle Sticky" }
+	Entry = "(Un)Shade" { Actions = "Toggle Shaded" }
+	Entry = "Iconify" { Actions = "Set Iconified" }
+	Entry = "Command.." { Actions = "ShowCmdDialog" }
+
+	Submenu = "Maximize" {
+		Entry = "Toggle Full" { Actions = "Toggle Maximized True True" }
+		Entry = "Toggle Horizontal" { Actions = "Toggle Maximized True False" }
+		Entry = "Toggle Vertical" { Actions = "Toggle Maximized False True" }
+	}
+	Submenu = "Fill" {
+		Entry = "Full" { Actions = "MaxFill True True" }
+		Entry = "Horizontal" { Actions = "MaxFill True False" }
+		Entry = "Vertical" { Actions = "MaxFill False True" }
+	}
+	Submenu = "Stacking" {
+		Entry = "Raise" { Actions = "Raise" }
+		Entry = "Lower" { Actions = "Lower" }
+		Entry = "Toggle Always On Top" { Actions = "Toggle AlwaysOnTop" }
+		Entry = "Toggle Always Below" { Actions = "Toggle AlwaysBelow" }
+	}
+	Submenu = "Decorations" {
+		Entry = "Toggle Decorations" { Actions = "Toggle DecorBorder; Toggle DecorTitlebar" }
+		Entry = "Toggle Borders" { Actions = "Toggle DecorBorder" }
+		Entry = "Toggle Titlebar" { Actions = "Toggle DecorTitlebar" }
+	}
+	Submenu = "Skip" {
+		Entry = "Toggle showing this frame in menus" { Actions = "Toggle Skip Menus" }
+		Entry = "Toggle including this frame in focus toggle" { Actions = "Toggle Skip FocusToggle" }
+		Entry = "Toggle if this frame snaps to other windows" { Actions = "Toggle Skip Snap" }
+	}
+	SubMenu = "Send To" {
+		# Create sendto menu once per pekwm config reload. The fast way that
+		# will work for most if not all users.
+		COMMAND = "$_PEKWM_SCRIPT_PATH/pekwm_ws_menu.sh send"
+		# Create sendto menu every time the menu is opened. The slow way.
+		# This is what you want if you are using external tools to make
+		# the amount of workspaces something else than what you define in
+		# ~/.pekwm/config. You will know if you want this.
+		# Entry = "" { Actions = "Dynamic $_PEKWM_SCRIPT_PATH/pekwm_ws_menu.sh send dynamic" }
+	}
+	Separator {}
+	Entry = "Close" { Actions = "Close" }
+	Submenu = "Kill" { Entry = "Kill application" { Actions = "Kill" } }
+}
