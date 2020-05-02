@@ -23,7 +23,7 @@ function main() {
 function sanity_check() {
     # Check for debootstrap command and then install from downloaded deb if not present.
     # We could install from current apt but I want the user and myself to be fully aware
-    # of what they are chosing. IE, we could just run the install command themselves...
+    # of what they are chosing. IE, we could just run the install command itself...
     debootstrap_comm=$(which debootstrap)
     if [[ "${debootstrap_comm}" == "" ]]; then
         echo "No deboostrap command found so will try installing from local directory...\n"
