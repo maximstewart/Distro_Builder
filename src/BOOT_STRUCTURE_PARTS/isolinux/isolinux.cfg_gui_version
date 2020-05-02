@@ -47,18 +47,30 @@ MENU COLOR tabmsg       31;40   #30ffffff #00000000 std
 LABEL solosLive
     MENU label ^Try Sol-OS
     KERNEL /casper/vmlinuz
-    append boot=casper initrd=/casper/initrd.gz file=/images/filesystem.squashfs quiet
+    APPEND file=/cdrom/preseed/ubuntu.seed boot=casper initrd=/casper/initrd.lz quiet --
 
 LABEL solosInstall
     MENU label ^Install Sol-OS
     KERNEL /casper/vmlinuz
-    APPEND boot=casper initrd=/casper/initrd.gz file=/images/filesystem.squashfs finstall quiet splash
+    APPEND file=/cdrom/preseed/ubuntu.seed boot=casper initrd=/casper/initrd.lz finstall quiet --
+
 
 MENU SEPARATOR
+
+LABEL check
+  MENU label ^Check CD for defects
+  KERNEL /casper/vmlinuz
+  APPEND boot=casper integrity-check initrd=/casper/initrd.lz quiet --
+
+LABEL memtest
+  menu label ^Memory test
+  kernel /install/memtest
+  append -
 
 LABEL hd
     MENU label ^Boot from first hard disk
     localboot 0x80
+    APPEND -
 
 LABEL reboot
     MENU LABEL ^Reboot

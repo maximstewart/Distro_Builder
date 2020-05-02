@@ -10,6 +10,20 @@
 function main() {
     echo "Moving ISO linux parts..."
     move_iso_linux_parts;
+
+    echo "\nWhich boot style do you want to use?"
+    echo "\t 1) Text Boot"
+    echo "\t 2) GUI Boot"
+    read -p "--> : " ANSR
+    while [[ $ANSR != "1" ]] && [[ $ANSR != "2" ]]; do
+        read -p "--> : " ANSR
+    done
+    case $ANSR in
+        "1" )  isolinux_text_boot; break;;
+        "2" ) isolinux_gui_boot; break;;
+        * ) echo "Don't know how you got here but that's a bad sign..."; break;;
+    esac
+
     echo "Creating manifest..."
     create_manifest;
     echo "Squashing chroot filesystem..."
@@ -32,8 +46,9 @@ function move_iso_linux_parts() {
     sudo cp "${CHROOT_PTH}"/boot/vmlinuz-5.4.**-**-generic image/casper/vmlinuz
     echo "Copying ${CHROOT_PTH}/boot/initrd.img-5.4.**-**-generic to image/casper/initrd.lz"
     sudo cp "${CHROOT_PTH}"/boot/initrd.img-5.4.**-**-generic image/casper/initrd.lz
+}
 
-
+function isolinux_text_boot() {
     # We need the isolinux and memtest binaries.
     # (Note: some distros place file isolinux.bin under /usr/lib/syslinux .)
     sudo cp /usr/lib/ISOLINUX/isolinux.bin image/isolinux/
@@ -46,6 +61,16 @@ function move_iso_linux_parts() {
     cp BOOT_STRUCTURE_PARTS/splash_screen/isolinux.txt image/isolinux/
     cp BOOT_STRUCTURE_PARTS/splash_screen/splash.rle image/isolinux/
 }
+
+
+function isolinux_gui_boot() {
+    # Use local options
+    sudo cp BOOT_STRUCTURE_PARTS/isolinux/* image/isolinux/
+    sudo rm image/isolinux/isolinux.cfg_text_version
+    sudo mv image/isolinux/isolinux.cfg_gui_version image/isolinux/isolinux.cfg
+}
+
+
 
 function create_manifest() {
     sudo chroot ${CHROOT_PTH} dpkg-query -W --showformat='${Package} ${Version}\n' | sudo tee image/casper/filesystem.manifest
