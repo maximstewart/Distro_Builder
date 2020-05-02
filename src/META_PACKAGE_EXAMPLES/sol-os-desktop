@@ -1,0 +1,20 @@
+### Commented entries have reasonable defaults.
+### Uncomment to edit them.
+# Source: sol-os-desktop-src
+Section: misc
+Priority: optional
+Homepage: https://www.itdominator.com/
+Standards-Version: 3.9.2
+
+Package: sol-os-desktop
+Version: 0.0.1
+Maintainer: Maxim Stewart <maximstewart1@gmail.com>
+Depends: xserver-xorg,xorg,xinit,pulseaudio,pavucontrol,sox,libsox-fmt-all,udisks2,slim,
+    xcompmgr,pekwm,default-jre,openjfx,gufw,wicd-curses,gparted,gdebi,file-roller,hardinfo,
+    terminator,stjerm,onboard
+Provides: xserver-xorg,xorg,xinit,pulseaudio,pavucontrol,sox,libsox-fmt-all,udisks2,slim,
+    xcompmgr,pekwm,default-jre,openjfx,gufw,wicd-curses,gparted,gdebi,file-roller,hardinfo,
+    terminator,stjerm,onboard
+Architecture: amd64
+Description: Sol-OS: A minimal OS
+    Sol-OS is a minimal OS keeping things simple and light weight. This meta-package installs the base programs that are needed to provide a usable desktop.

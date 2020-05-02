@@ -11,7 +11,7 @@ function main() {
     clear;
     if [[ $(sanity_check) -eq 1 ]]; then echo "\nExiting..."; return; fi
 
-    start_menu_mesage
+    start_menu_mesage;
     read -p "--> : " ANSR
     while [[ $ANSR != "0" ]] && [[ $ANSR != "1" ]] && \
           [[ $ANSR != "2" ]] && [[ $ANSR != "3" ]] && \
@@ -20,18 +20,18 @@ function main() {
         read -p "--> : " ANSR
     done
     case $ANSR in
-        "0" ) do_all_run; break;;
+        "1" ) do_all_run; break;;
         # First setup the debootstrap env...
-        "1" ) ./step_1_debootstrap.sh; break;;
+        "2" ) ./step_1_debootstrap.sh; break;;
         # Then setup and run chroot...
-        "2" ) ./step_2_chroot.sh; break;;
+        "3" ) ./step_2_chroot.sh; break;;
         # Create the boot structure data...
-        "3" ) ./step_3_create_boot_structure.sh; break;;
+        "4" ) ./step_3_create_boot_structure.sh; break;;
         # Create the CD...
-        "4" ) ./step_4_create_CD.sh; break;;
+        "5" ) ./step_4_create_CD.sh; break;;
         # Purge everythin and start fresh...
-        "5" ) ./cleanup.sh; break;;
-        "6" ) exit; break;;
+        "6" ) ./cleanup.sh; break;;
+        "0" ) exit; break;;
         * ) echo "Don't know how you got here but that's a bad sign..."; break;;
     esac
 }

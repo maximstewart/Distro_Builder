@@ -10,6 +10,6 @@ function main() {
     # Add your keys here..
     # Command: sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys <key>
     # Ex: sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 283EC8CD
-
+    echo "No gpg keys specified for addition..."
 }
 main $@;
