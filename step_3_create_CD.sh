@@ -8,18 +8,18 @@
 
 
 function main() {
-    # echo "Moving ISO linux parts..."
-    # move_iso_linux_parts;
-    # echo "Creating manifest..."
-    # create_manifest;
-    # echo "Squashing chroot filesystem..."
-    # compress_chroot;
-    # echo "Creating diskdefines data..."
-    # diskdefines;
-    # echo "Creating recognition info..."
-    # remix_recognition;
-    # echo "Creating MD5 data..."
-    # md5_cal;
+    echo "Moving ISO linux parts..."
+    move_iso_linux_parts;
+    echo "Creating manifest..."
+    create_manifest;
+    echo "Squashing chroot filesystem..."
+    compress_chroot;
+    echo "Creating diskdefines data..."
+    diskdefines;
+    echo "Creating recognition info..."
+    remix_recognition;
+    echo "Creating MD5 data..."
+    md5_cal;
     echo "Creating the ISO file..."
     create_iso;
 }
@@ -81,9 +81,6 @@ EOF
 }
 
 function remix_recognition() {
-    touch image/ubuntu
-    mkdir image/.disk/
-
     touch image/.disk/base_installable
     echo "full_cd/single" > image/.disk/cd_type
     echo "${OS_NAME} ${OS_VER}" > image/.disk/info

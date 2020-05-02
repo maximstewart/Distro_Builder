@@ -8,6 +8,7 @@
 . CONFIG.sh
 
 function main() {
+    clear;
     if [[ $(sanity_check) -eq 1 ]]; then echo "\nExiting..."; return; fi
 
     # First setup the debootstrap env...
@@ -20,7 +21,6 @@ function main() {
 
 
 function sanity_check() {
-    clear;
     # Check for debootstrap command and then install from downloaded deb if not present.
     # We could install from current apt but I want the user and myself to be fully aware
     # of what they are chosing. IE, we could just run the install command themselves...
@@ -56,7 +56,7 @@ function sanity_check() {
                 "Going to run :\n" \
                 "\tapt-get install xserver-xephyr syslinux squashfs-tools genisoimage netpbm syslinux-utils -y"
         sleep 2
-        apt-get install xserver-xephyr syslinux squashfs-tools genisoimage netpbm syslinux-utils -y
+        sudo apt-get install xserver-xephyr syslinux squashfs-tools genisoimage netpbm syslinux-utils -y
     fi
 
     if [[ "${ARCH}" == "" ]] || [[ "${RELEASE}" == "" ]]; then

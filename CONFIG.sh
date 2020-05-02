@@ -21,18 +21,20 @@ SYSTEM_RELEASE=""
 # $RELEASE is the version of Ubuntu/Debian you intend to build an ISO for.
 # Some options:  xenal, bionic, disco, focal
 # Versions: xenal (16.0.4), bionic (18.04), disco (19.04), focal (20.04)
-RELEASE=""
+RELEASE="focal"
+
 
 # $ARCH is the target processor architecture.
 # For old 32 bit x86 systems use i386.
 # For newer 64-bit x86 systems (also known as x64, x86_64, Intel 64, and AMD64) use amd64.
-ARCH=""
+ARCH="amd64"
 
 # the name of your distro and ISO
-OS_NAME=""
+OS_NAME="Sol-OS"
+OS_VER="1.00"
 
 # The user of the live boot
-LIVE_USER=""
+LIVE_USER="earth"
 
 
 
@@ -44,7 +46,8 @@ echo "Base Dir: " $(pwd) "\n";
 
 # Make work structure
 mkdir -p "${CHROOT_PTH}"
-mkdir -p image/{casper,isolinux,install}
+mkdir -p image/{casper,isolinux,install,boot,.disk}
+touch image/ubuntu
 
 
 
