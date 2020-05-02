@@ -20,19 +20,19 @@ function main() {
         read -p "--> : " ANSR
     done
     case $ANSR in
-        "1" ) do_all_run; break;;
+        "1" ) do_all_run;;
         # First setup the debootstrap env...
-        "2" ) ./step_1_debootstrap.sh; break;;
+        "2" ) ./step_1_debootstrap.sh;;
         # Then setup and run chroot...
-        "3" ) ./step_2_chroot.sh; break;;
+        "3" ) ./step_2_chroot.sh;;
         # Create the boot structure data...
-        "4" ) ./step_3_create_boot_structure.sh; break;;
+        "4" ) ./step_3_create_boot_structure.sh;;
         # Create the CD...
-        "5" ) ./step_4_create_CD.sh; break;;
+        "5" ) ./step_4_create_CD.sh;;
         # Purge everythin and start fresh...
-        "6" ) ./cleanup.sh; break;;
-        "0" ) exit; break;;
-        * ) echo "Don't know how you got here but that's a bad sign..."; break;;
+        "6" ) ./cleanup.sh;;
+        "0" ) exit;;
+        * ) echo "Don't know how you got here but that's a bad sign...";;
     esac
 }
 

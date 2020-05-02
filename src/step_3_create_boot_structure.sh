@@ -12,15 +12,15 @@ function main() {
     move_iso_linux_parts;
 
     echo "\nWhich boot style do you want to use?"
-    echo "\t 1) Text Boot"
-    echo "\t 2) GUI Boot"
+    echo "\t1) Text Boot"
+    echo "\t2) GUI Boot"
     read -p "--> : " ANSR
     while [[ $ANSR != "1" ]] && [[ $ANSR != "2" ]]; do
         read -p "--> : " ANSR
     done
     case $ANSR in
-        "1" )  isolinux_text_boot; break;;
-        "2" ) isolinux_gui_boot; break;;
+        "1" )  isolinux_text_boot;;
+        "2" ) isolinux_gui_boot;;
     esac
 
     echo "Creating manifest..."

@@ -20,19 +20,19 @@ function main() {
         read -p "--> : " ANSR
     done
     case $ANSR in
-        "1" ) run_once_process; break;;
-        "2" ) ./GET_PPA_REPOSITORIES.sh; break;;
-        "3" ) ./GET_PPA_GPG_KEYS.sh; break;;
-        "4" ) get_live_iso_dependencies; break;;
-        "5" ) base; break;;
-        "6" ) gaming; break;;
-        "7" ) media; break;;
-        "8" ) office; break;;
-        "9" ) debs; break;;
-        "10" ) transfer_settings; break;;
-        "11" ) ./CLEANUP.sh; break;;
-        "0" ) exit; break;;
-        * ) echo "Don't know how you got here but that's a bad sign..."; break;;
+        "1" ) run_once_process;;
+        "2" ) ./GET_PPA_REPOSITORIES.sh;;
+        "3" ) ./GET_PPA_GPG_KEYS.sh;;
+        "4" ) get_live_iso_dependencies;;
+        "5" ) base;;
+        "6" ) gaming;;
+        "7" ) media;;
+        "8" ) office;;
+        "9" ) debs;;
+        "10" ) transfer_settings;;
+        "11" ) ./CLEANUP.sh;;
+        "0" ) exit;;
+        * ) echo "Don't know how you got here but that's a bad sign...";;
     esac
 }
 
