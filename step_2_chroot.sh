@@ -21,6 +21,7 @@ function main() {
     sudo mount -t sysfs sys "${CHROOT_PTH}"/sys/
 
     # setup some configs stuff for internetz
+    sudo cp -r COPY_OVER_TO_CHROOT/ "${CHROOT_PTH}"
     sudo cp /etc/hosts "${CHROOT_PTH}"/etc/hosts
     sudo cp /etc/resolv.conf "${CHROOT_PTH}"/etc/resolv.conf
     sudo chown $USER "${CHROOT_PTH}"/etc/apt/sources.list
@@ -32,6 +33,7 @@ function main() {
     sudo chroot "${CHROOT_PTH}"
 
     # cleanup
+    sudo rm -rf "${CHROOT_PTH}"/COPY_OVER_TO_CHROOT/
     sudo umount "${CHROOT_PTH}"/dev/
     sudo umount -lf "${CHROOT_PTH}"/proc/
     sudo umount -lf "${CHROOT_PTH}"/sys/

@@ -12,8 +12,10 @@ function main() {
 
     # First setup the debootstrap env...
     ./step_1_debootstrap.sh
-    # Then setup and run chroot
+    # Then setup and run chroot...
     ./step_2_chroot.sh
+    # Create the CD...
+    ./step_3_create_CD.sh
 }
 
 
@@ -39,8 +41,10 @@ function sanity_check() {
 
     xyphr=$(which Xephyr)        ## Chroot view window || alt desktop window
     sysLnx=$(which syslinux)     ## Casper stuff
+    sysTools=$(which ppmtolss16) ## Part of syslinux-utils
     squash=$(which unsquashfs)   ## Squashfs-tools
     genIso=$(which genisoimage)  ## Iso maker
+    netpbm=$(which bmptoppm)     ## Boot splash maker part
     if [[ $xyphr == "" ]] || [[ $sysLnx == "" ]] || \
        [[ $squash == "" ]] || [[ $genIso == "" ]]; then
         echo "# ----  Missing Some Packages  ---- #\n" \
@@ -48,10 +52,11 @@ function sanity_check() {
                 "Syslinux :" "${sysLnx}\n" \
                 "Squashfs-tools :" "${squash}\n" \
                 "Genisoimage :" "${genIso}\n" \
+                "Netpbm :" "${netpbm}\n" \
                 "Going to run :\n" \
-                "\tapt-get install xserver-xephyr syslinux squashfs-tools genisoimage -y"
+                "\tapt-get install xserver-xephyr syslinux squashfs-tools genisoimage netpbm syslinux-utils -y"
         sleep 2
-        apt-get install xserver-xephyr syslinux squashfs-tools genisoimage -y
+        apt-get install xserver-xephyr syslinux squashfs-tools genisoimage netpbm syslinux-utils -y
     fi
 
     if [[ "${ARCH}" == "" ]] || [[ "${RELEASE}" == "" ]]; then

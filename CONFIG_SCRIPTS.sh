@@ -51,7 +51,8 @@ function confirm_dialouge() {
 # ----  Messages Used Throughout The Process  ---- #
 
 function chroot_big_dump_mesage() {
-    echo "Run each time you chroot:"
+    echo "NOTE: COPY_OVER_TO_CHROOT is removed after exit from chroot env."
+    echo "\nRun each time you chroot:"
     echo "\texport HOME=/root"
     echo "\texport LC_ALL=C"
     echo "\nRun once in chroot:"
