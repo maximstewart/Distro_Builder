@@ -15,14 +15,11 @@ function main() {
     ./step_1_debootstrap.sh
     # Then setup and run chroot
     # ./step_2_chroot.sh
-
 }
 
 
 function sanity_check() {
     clear;
-    SCRIPTPATH="$( cd "$(dirname "")" >/dev/null 2>&1 ; pwd -P )";
-    cd "${SCRIPTPATH}";
     echo "Working Dir: " $(pwd) "\n";
 
     # Make work structure

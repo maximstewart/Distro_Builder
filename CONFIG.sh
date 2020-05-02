@@ -16,8 +16,7 @@ function set_system_release() {
 
 # ----  Setup Variables  ---- #
 
-
-# Chroot path
+SCRIPT_PATH="$( cd "$(dirname "")" >/dev/null 2>&1 ; pwd -P )";
 CHROOT_PTH="./work/chroot"
 
 # Resolution of Xephyr... ex: 1920x1080 or 1600x900, etc
@@ -52,6 +51,7 @@ LIVE_USER=""
 
 # ----  Call CONFIG Methods Here As Needed  ---- #
 set_system_release;
+cd "${SCRIPT_PATH}";
 
 
 # ----  DO NOT CHANGE OR REMOVE UNLESS YOU KNOW WHAT YOU ARE DOING  ---- #
