@@ -20,8 +20,6 @@ function main() {
     remix_recognition;
     echo "Creating MD5 data..."
     md5_cal;
-    echo "Creating the ISO file..."
-    createIso;
 }
 
 function move_iso_linux_parts() {
@@ -89,21 +87,9 @@ function remix_recognition() {
 
 function md5_cal() {
     sudo -s
-    (cd image && find . -type f -print0 | xargs -0 md5sum | grep -v "\./md5sum.txt" > md5sum.txt)
+    (cd image/ && find . -type f -print0 | xargs -0 md5sum | grep -v "\./md5sum.txt" > md5sum.txt)
     exit
-}
-
-function createIso() {
-    cd image/
-    sudo mkisofs -r -V "${OS_NAME}" -cache-inodes -J -l \
-        -b isolinux/isolinux.bin \
-        -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 \
-        -boot-info-table -o ../"${OS_NAME}".iso .
     cd ..
-    # sudo mkisofs -D -r -cache-inodes -J -l -b isolinux/isolinux.bin -c \
-    # isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o \
-    #                                                      ../"${OS_NAME}".iso .
-
 }
 
 main $@;

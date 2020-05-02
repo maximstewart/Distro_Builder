@@ -15,8 +15,10 @@ function main() {
     ./step_1_debootstrap.sh
     # Then setup and run chroot...
     ./step_2_chroot.sh
+    # Create the boot structure data...
+    ./step_3_create_boot_structure.sh
     # Create the CD...
-    ./step_3_create_CD.sh
+    ./step_4_create_CD.sh
 }
 
 
