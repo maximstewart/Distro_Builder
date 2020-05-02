@@ -9,42 +9,31 @@
 
 # Debootstrap process
 function main() {
-    ansr=$(confirm_dialouge "Launch Xephyr preview window?\n Resolution: ${RES} Window ID: ${ID}")
-    if [[ $ansr -eq 0 ]]; then
+    confirm_dialouge "Launch Xephyr preview window?\n Resolution: ${RESOLUTION} Window ID: ${ID}"
+    if [[ $? -eq 0 ]]; then
         Xephyr -resizeable -screen "${RES}" "${ID}" &
     fi
 
-    sudo mount --bind /dev "${CHROOT_PTH}"/dev
+    clear
+    # Mount stuff
+    sudo mount -o /dev "${CHROOT_PTH}"/dev/
+    sudo mount -t proc proc proc/
+    sudo mount -t sysfs sys sys/
 
+    # setup some configs stuff for internetz
     sudo cp /etc/hosts "${CHROOT_PTH}"/etc/hosts
     sudo cp /etc/resolv.conf "${CHROOT_PTH}"/etc/resolv.conf
+    sudo chown $USER "${CHROOT_PTH}"/etc/apt/sources.list
     sudo sed s/$SYSTEM_RELEASE/$RELEASE/ < /etc/apt/sources.list > "${CHROOT_PTH}"/etc/apt/sources.list
+    sudo chown root "${CHROOT_PTH}"/etc/apt/sources.list
 
+    # Enter chroot mode
+    chroot_big_dump_mesage
     sudo chroot "${CHROOT_PTH}"
 
     # cleanup
-    sudo umount "${CHROOT_PTH}"/dev
-
-
-    # ----  OLD SETUP  ---- #
-    # ## Set Xephyr and set chrooting mounts
-    #     Xephyr -resizeable -screen "${RES}" "${ID}" &
-    #     cd squashfs-root/
-    #     mount -t proc proc proc/
-    #     mount -t sysfs sys sys/
-    #     mount -o bind /dev dev/
-    #     cp /etc/resolv.conf etc/
-    #
-    # ##  Enter env with chroot
-    #     chroot . bash
-    #
-    # ## Unmount binds
-    #     umount -lf dev/
-    #     umount -lf proc/
-    #     umount -lf sys/
-    #     cd ..
-
-
-
+    sudo umount -lf "${CHROOT_PTH}"/dev/
+    sudo umount -lf "${CHROOT_PTH}"/proc/
+    sudo umount -lf "${CHROOT_PTH}"/sys/
 }
 main $@;
