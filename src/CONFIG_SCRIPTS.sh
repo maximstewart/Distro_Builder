@@ -50,6 +50,18 @@ function confirm_dialouge() {
 
 # ----  Messages Used Throughout The Process  ---- #
 
+function start_menu_mesage() {
+    echo "NOTE: Remember to check the CONFIG.sh and set the variables!"
+    echo "\nWhat do you want to run?"
+    echo "\t0) Do all jobs (Including cleanup berfore starting.)"
+    echo "\t1) Do debootstrap run"
+    echo "\t2) Chroot"
+    echo "\t3) Create boot structure"
+    echo "\t4) Create the ISO"
+    echo "\t5) Cleanup (Purges everything that was generated.)"
+    echo "\t6) EXIT"
+}
+
 function chroot_big_dump_mesage() {
     echo "NOTE: COPY_OVER_TO_CHROOT is removed after exit from chroot env."
     echo "\nRun each time you chroot:"

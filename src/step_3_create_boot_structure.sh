@@ -58,7 +58,9 @@ function create_manifest() {
 }
 
 function compress_chroot() {
-    sudo mksquashfs "${CHROOT_PTH}" image/casper/filesystem.squashfs
+    sudo mksquashfs "${CHROOT_PTH}" image/casper/filesystem.squashfs \
+        -b 1048576 -comp xz -Xdict-size 100%
+
     printf $(sudo du -sx --block-size=1 "${CHROOT_PTH}" | cut -f1) > image/casper/filesystem.size
 }
 
@@ -86,10 +88,7 @@ function remix_recognition() {
 }
 
 function md5_cal() {
-    sudo -s
     (cd image/ && find . -type f -print0 | xargs -0 md5sum | grep -v "\./md5sum.txt" > md5sum.txt)
-    exit
-    cd ..
 }
 
 main $@;

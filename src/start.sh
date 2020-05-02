@@ -11,16 +11,43 @@ function main() {
     clear;
     if [[ $(sanity_check) -eq 1 ]]; then echo "\nExiting..."; return; fi
 
-    # First setup the debootstrap env...
-    ./step_1_debootstrap.sh
-    # Then setup and run chroot...
-    ./step_2_chroot.sh
-    # Create the boot structure data...
-    ./step_3_create_boot_structure.sh
-    # Create the CD...
-    ./step_4_create_CD.sh
+    start_menu_mesage
+    read -p "--> : " ANSR
+    while [[ $ANSR != "0" ]] && [[ $ANSR != "1" ]] && \
+          [[ $ANSR != "2" ]] && [[ $ANSR != "3" ]] && \
+          [[ $ANSR != "4" ]] && [[ $ANSR != "5" ]] && \
+                                [[ $ANSR != "6" ]]; do
+        read -p "--> : " ANSR
+    done
+    case $ANSR in
+        "0" ) do_all_run; break;;
+        # First setup the debootstrap env...
+        "1" ) ./step_1_debootstrap.sh; break;;
+        # Then setup and run chroot...
+        "2" ) ./step_2_chroot.sh; break;;
+        # Create the boot structure data...
+        "3" ) ./step_3_create_boot_structure.sh; break;;
+        # Create the CD...
+        "4" ) ./step_4_create_CD.sh; break;;
+        # Purge everythin and start fresh...
+        "5" ) ./cleanup.sh; break;;
+        "6" ) exit; break;;
+        * ) echo "Don't know how you got here but that's a bad sign..."; break;;
+    esac
 }
 
+function do_all_run() {
+    # Starting with a clean slate
+    ./cleanup.sh;
+    # First setup the debootstrap env...
+    ./step_1_debootstrap.sh;
+    # Then setup and run chroot...
+    ./step_2_chroot.sh;
+    # Create the boot structure data...
+    ./step_3_create_boot_structure.sh;
+    # Create the CD...
+    ./step_4_create_CD.sh;
+}
 
 function sanity_check() {
     # Check for debootstrap command and then install from downloaded deb if not present.

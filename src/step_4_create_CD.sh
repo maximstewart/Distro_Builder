@@ -15,10 +15,6 @@ function main() {
         -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 \
         -boot-info-table -o ../"${OS_NAME}".iso .
     cd ..
-    # sudo mkisofs -D -r -cache-inodes -J -l -b isolinux/isolinux.bin -c \
-    # isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o \
-    #                                                      ../"${OS_NAME}".iso .
-
 }
 
 main $@;
