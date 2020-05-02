@@ -14,7 +14,7 @@ ID=":10"
 
 
 # Your system release... this is set by set_system_release
-# function above and can be safetly ignored
+# method from CONFIG_SCRIPTS.sh above and can be safetly ignored
 SYSTEM_RELEASE=""
 
 
@@ -30,11 +30,11 @@ RELEASE="focal"
 ARCH="amd64"
 
 # the name of your distro and ISO
-OS_NAME="Sol-OS"
+OS_NAME=""
 OS_VER="1.00"
 
 # The user of the live boot
-LIVE_USER="earth"
+LIVE_USER=""
 
 
 
