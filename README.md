@@ -6,7 +6,7 @@ be handled by the user.
 
 # Notes
 * Check the CONFIG.sh files for important variables that need to be set. (In COPY_OVER_TO_CHROOT/ and App Root dir)
-* In COPY_OVER_TO_CHROOT/ Checkout the start.sh file for structuring you custom build pipeline.
+* In COPY_OVER_TO_CHROOT/ Checkout the start.sh file for structuring your custom build pipeline through scripts.
 
 # Updates
 n/a
