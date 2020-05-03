@@ -21,15 +21,15 @@ function main() {
     done
     case $ANSR in
         "1" ) update_and_upgrade;;
-        "2" ) ./GET_PPA_REPOSITORIES.sh;;
-        "3" ) ./GET_PPA_GPG_KEYS.sh;;
-        "4" ) get_live_iso_dependencies;;
-        "5" ) base;;
-        "6" ) gaming;;
-        "7" ) media;;
-        "8" ) office;;
-        "9" ) debs;;
-        "10" ) transfer_settings;;
+        "2" ) install_live_iso_dependencies;;
+        "3" ) install_base;;
+        "4" ) install_gaming;;
+        "5" ) install_media;;
+        "6" ) install_office;;
+        "7" ) install_debs;;
+        "8" ) transfer_settings;;
+        "9" ) ./GET_PPA_REPOSITORIES.sh;;
+        "10" ) ./GET_PPA_GPG_KEYS.sh;;
         "11" ) ./CLEANUP.sh;;
         "0" ) exit;;
         * ) echo "Don't know how you got here but that's a bad sign...";;
@@ -45,27 +45,27 @@ function update_and_upgrade() {
 }
 
 
-function get_live_iso_dependencies() {
-    apt-get install --no-install-recommends --no-install-suggests -y \
-        casper lupin-casper
-    apt-get install --no-install-recommends --no-install-suggests -y \
-        discover laptop-detect os-prober
+function install_live_iso_dependencies() {
+    # Adds ~30MB of stuff
+    apt-get install -y casper lupin-casper
+    # Adds ~25MB of stuff
+    apt-get install -y discover laptop-detect os-prober
+    # Adds ~55MB of stuff
     # In keeping with ubuntu-mini-remix structure I've added this here.
-    # Might be a bad idea. (Actually really is a bad idea... this should be manually called through a menu op.)
-    # This breaks from keeping things generic enough to be used in debian. (Maybe? Could just fail an install.)
-    # Surprisingly doesn't add a whole lot. ~40MB of stuff...meh
-    apt-get install --no-install-recommends --no-install-suggests -y \
+    # Might be a bad idea. (Actually really is a bad idea... as this should be manually called.)
+    # This breaks from keeping things generic for it and debian. (Maybe? Could just fail an install.)
+    apt-get install -y \
         ubuntu-minimal ubuntu-standard
 
-    # The generic kernel can baloon a system with just the above and ssh to 450+MB.
-    # Yet, we need A kernel in order to even boot into. I need to look into a kind
-    # of menu for the user where they could chose one from the list. But, for right
-    # now, we'll ignore this. User, try using the most recent kernel that is stable instead.
-    # apt-get install --no-install-recommends --no-install-suggests -y \
-    #     linux-generic
+    # The generic kernel can baloon a system with just the above
+    # from ~130MB to 485+MB. (With good compression of squashfs)
+    # Yet, we need A kernel in order to even boot stuff.
+    # I need to look into a kind of menu for the user where they could chose one.
+    # For right now, we'll use this...
+    apt-get install -y linux-generic
 
 
-    echo "Do you want to install?"
+    echo "Do you want to install one of the OS installers?"
     echo "\t1) ubiquity-frontend-gtk"
     echo "\t2) ubiquity-frontend-kde"
     echo "\t0) nethier..."
@@ -86,7 +86,8 @@ function get_live_iso_dependencies() {
 # -------------------------------Bellow Installs the main system------------------------ #
 
 ######################## Main Desktop ########################
-function base() {
+function install_base() {
+    echo "Install base stuff stub..."
     #  Pushe to a meta-package deb after selecting what if anything you want to keep...
         # apt-get install -y xserver-xorg xorg xinit slim synaptic aptitude apt-xapian-index \
         # gufw wicd-curses pulseaudio pavucontrol file-roller p7zip-rar arj rar unrar-free \
@@ -94,7 +95,7 @@ function base() {
         # gparted gdebi sox udisks2 iftop htop tree hardinfo libsox-fmt-all onboard mc \
         # oracle-java8-installer apt-transport-https software-properties-common -y
 
-    apt-get autoremove --purge -y && apt-get autoclean
+        # apt-get autoremove --purge -y && apt-get autoclean
 
     #### Change bellow mate-core to other if one wants different window managers
     #### Above is mostly common base system stuff
@@ -109,20 +110,23 @@ function base() {
 }
 
 ############ Gaming ############
-function gaming() {
+function install_gaming() {
+    echo "Install gaming stuff stub..."
     # apt-get install --no-install-recommends --no-install-suggests -y \
     #     steam-launcher playonlinux dosbox
 }
 
 ################### Multimedia-- Videos- Images- Etc ###################
-function media() {
+function install_media() {
+    echo "Install media stuff stub..."
     # apt-get install --no-install-recommends --no-install-suggests -y \
     #     blender bomi deadbeef gimp gimp-gap obs-studio xfce4-screenshooter \
     #     x264 mirage xchat-gnome guvcview
 }
 
 ######################### Office-General Stuff #########################
-function office() {
+function install_office() {
+    echo "Install office stuff stub..."
     # apt-get install --no-install-recommends --no-install-suggests -y \
     #     filezilla qbittorrent quicksynergy synergy atom galculator \
     #     bleachbit gtkorphan libreoffice evince calibre
@@ -130,7 +134,7 @@ function office() {
 
 ################### Look at DEB dirs to install software ####################
 
-function debs() {
+function install_debs() {
 ARCH=$(uname -m)
 touch COPY_OVER_TO_CHROOT/DEBS.sh
 

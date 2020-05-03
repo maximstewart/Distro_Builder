@@ -8,6 +8,10 @@
 
 
 function main() {
+    # Cleanup just incase we've ran this before.
+    sudo rm -rf image/casper/*
+    sudo rm -rf image/isolinux/*
+
     echo "Moving ISO linux parts..."
     move_iso_linux_parts;
 
