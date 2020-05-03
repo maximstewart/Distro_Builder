@@ -110,7 +110,8 @@ function remix_recognition() {
 }
 
 function md5_cal() {
-    (cd image/ && find . -type f -print0 | xargs -0 md5sum | grep -v "\./md5sum.txt" > md5sum.txt)
+    cd image/
+    find . -type f -print0 | xargs -0 md5sum | grep -v "\./md5sum.txt" > md5sum.txt
 }
 
 main $@;
