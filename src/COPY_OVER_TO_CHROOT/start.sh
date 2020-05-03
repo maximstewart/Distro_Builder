@@ -64,9 +64,9 @@ function get_live_iso_dependencies() {
         read -p "--> : " ANSR
     done
     case $ANSR in
-        "0" ) apt-get install --yes ubiquity-frontend-gtk --no-install-recommends --no-install-suggests;;
-        "1" ) apt-get install --yes ubiquity-frontend-kde --no-install-recommends --no-install-suggests;;
-        "2" ) return;;
+        "1" ) apt-get install --yes ubiquity-frontend-gtk --no-install-recommends --no-install-suggests;;
+        "2" ) apt-get install --yes ubiquity-frontend-kde --no-install-recommends --no-install-suggests;;
+        "0" ) return;;
     esac
 }
 
