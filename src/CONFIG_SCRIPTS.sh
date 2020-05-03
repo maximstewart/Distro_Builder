@@ -53,7 +53,7 @@ function confirm_dialouge() {
 function start_menu_mesage() {
     echo "NOTE: Remember to check the CONFIG.sh and set the variables!"
     echo "\nWhat do you want to run?"
-    echo "\t1) Do all jobs (Including cleanup berfore starting.)"
+    echo "\t1) Do all jobs (Including cleanup before starting.)"
     echo "\t2) Do debootstrap run"
     echo "\t3) Chroot"
     echo "\t4) Create boot structure"
