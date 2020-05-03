@@ -12,7 +12,7 @@ be handled by the user.
 n/a
 
 # TODO
-* Create extremely bare bones install pipeline for core dependencies accross all build types.
+* Create extremely bare bones install pipeline for core dependencies across all build types.
 
 # Images
 ![1 Distro Builder Menu. ](images/pic1.png)
