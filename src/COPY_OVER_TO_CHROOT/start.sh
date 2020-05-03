@@ -20,7 +20,7 @@ function main() {
         read -p "--> : " ANSR
     done
     case $ANSR in
-        "1" ) run_once_process;;
+        "1" ) update_and_upgrade;;
         "2" ) ./GET_PPA_REPOSITORIES.sh;;
         "3" ) ./GET_PPA_GPG_KEYS.sh;;
         "4" ) get_live_iso_dependencies;;
@@ -39,21 +39,31 @@ function main() {
 }
 
 
-function run_once_process() {
+function update_and_upgrade() {
     apt-get update
-    apt-get install --yes dbus
-    dbus-uuidgen > /var/lib/dbus/machine-id
-    dpkg-divert --local --rename --add /sbin/initctl
-    # Gets us add-apt-repository command
-    apt-get install apt-transport-https software-properties-common -y
-    apt-get --yes upgrade
+    apt-get upgrade --no-install-recommends --no-install-suggests -y
 }
 
 
 function get_live_iso_dependencies() {
-    apt-get install --yes casper lupin-casper
-    apt-get install --yes discover laptop-detect os-prober
-    apt-get install --yes linux-generic
+    apt-get install --no-install-recommends --no-install-suggests -y \
+        casper lupin-casper
+    apt-get install --no-install-recommends --no-install-suggests -y \
+        discover laptop-detect os-prober
+    # In keeping with ubuntu-mini-remix structure I've added this here.
+    # Might be a bad idea. (Actually really is a bad idea... this should be manually called through a menu op.)
+    # This breaks from keeping things generic enough to be used in debian. (Maybe? Could just fail an install.)
+    # Surprisingly doesn't add a whole lot. ~40MB of stuff...meh
+    apt-get install --no-install-recommends --no-install-suggests -y \
+        ubuntu-minimal ubuntu-standard
+
+    # The generic kernel can baloon a system with just the above and ssh to 450+MB.
+    # Yet, we need A kernel in order to even boot into. I need to look into a kind
+    # of menu for the user where they could chose one from the list. But, for right
+    # now, we'll ignore this. User, try using the most recent kernel that is stable instead.
+    # apt-get install --no-install-recommends --no-install-suggests -y \
+    #     linux-generic
+
 
     echo "Do you want to install?"
     echo "\t1) ubiquity-frontend-gtk"
@@ -64,8 +74,10 @@ function get_live_iso_dependencies() {
         read -p "--> : " ANSR
     done
     case $ANSR in
-        "1" ) apt-get install --yes ubiquity-frontend-gtk --no-install-recommends --no-install-suggests;;
-        "2" ) apt-get install --yes ubiquity-frontend-kde --no-install-recommends --no-install-suggests;;
+        "1" ) apt-get install --no-install-recommends --no-install-suggests -y \
+                ubiquity-frontend-gtk;;
+        "2" ) apt-get install --no-install-recommends --no-install-suggests -y \
+                ubiquity-frontend-kde;;
         "0" ) return;;
     esac
 }
@@ -75,48 +87,45 @@ function get_live_iso_dependencies() {
 
 ######################## Main Desktop ########################
 function base() {
-#  Pushed to a meta-package deb
-    # apt-get install xserver-xorg xorg xinit slim synaptic aptitude apt-xapian-index \
-    # gufw wicd-curses pulseaudio pavucontrol file-roller p7zip-rar arj rar unrar-free \
-    # xcompmgr tweak lhasa unar p7zip zip terminator stjerm ttf-mscorefonts-installer \
-    # gparted gdebi sox udisks2 iftop htop tree hardinfo libsox-fmt-all onboard mc \
-    # oracle-java8-installer -y
+    #  Pushe to a meta-package deb after selecting what if anything you want to keep...
+        # apt-get install -y xserver-xorg xorg xinit slim synaptic aptitude apt-xapian-index \
+        # gufw wicd-curses pulseaudio pavucontrol file-roller p7zip-rar arj rar unrar-free \
+        # xcompmgr tweak lhasa unar p7zip zip terminator stjerm ttf-mscorefonts-installer \
+        # gparted gdebi sox udisks2 iftop htop tree hardinfo libsox-fmt-all onboard mc \
+        # oracle-java8-installer apt-transport-https software-properties-common -y
 
     apt-get autoremove --purge -y && apt-get autoclean
 
-#### Change bellow mate-core to other if one wants different window managers
-#### Above is mostly common base system stuff
-    apt-get install mate-core spacefm-gtk3 --no-install-recommends ulauncher -y
-    apt-get remove caja mate-terminal -y
-    aptitude keep-all
+    #### Change bellow mate-core to other if one wants different window managers
+    #### Above is mostly common base system stuff
+        # apt-get install --no-install-recommends -y mate-core spacefm-gtk3 ulauncher
+        # apt-get remove caja mate-terminal -y
 
-############ Themes ############
-    # apt-get install paper-gtk-theme paper-icon-theme \
-    #                 sable-gtk mate-icon-theme -y
+    # This keeps packages that were marked for removal when we still want them...
+    # I need to find the 'apt' version of this so as to divest from aptitude...
+        # aptitude keep-all
+
+    ############ Themes ############
 }
 
 ############ Gaming ############
 function gaming() {
-    apt-get --no-install-recommends --no-install-suggests install \
-        steam-launcher playonlinux dosbox -y
+    # apt-get install --no-install-recommends --no-install-suggests -y \
+    #     steam-launcher playonlinux dosbox
 }
 
 ################### Multimedia-- Videos- Images- Etc ###################
 function media() {
-# guvcview
-    apt-get --no-install-recommends --no-install-suggests install blender \
-        bomi deadbeef gimp gimp-gap obs-studio xfce4-screenshooter x264 mirage \
-        xchat-gnome -y
+    # apt-get install --no-install-recommends --no-install-suggests -y \
+    #     blender bomi deadbeef gimp gimp-gap obs-studio xfce4-screenshooter \
+    #     x264 mirage xchat-gnome guvcview
 }
 
 ######################### Office-General Stuff #########################
 function office() {
-# calibre
-    apt-get --no-install-recommends --no-install-suggests install  \
-        filezilla qbittorrent quicksynergy synergy atom galculator bleachbit \
-        gtkorphan libreoffice evince -y
-
-debs
+    # apt-get install --no-install-recommends --no-install-suggests -y \
+    #     filezilla qbittorrent quicksynergy synergy atom galculator \
+    #     bleachbit gtkorphan libreoffice evince calibre
 }
 
 ################### Look at DEB dirs to install software ####################
