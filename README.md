@@ -15,4 +15,5 @@ n/a
 * Create extremely bare bones install pipeline for core dependencies accross all build types.
 
 # Images
-![1 Distro Builder menu. ](images/pic1.png)
+![1 Distro Builder Menu. ](images/pic1.png)
+![1 Distro Builder Chroot Menu. ](images/pic2.png)
