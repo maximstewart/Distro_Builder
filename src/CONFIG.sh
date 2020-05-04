@@ -21,7 +21,7 @@ SYSTEM_RELEASE=""
 # $RELEASE is the version of Ubuntu/Debian you intend to build an ISO for.
 # Some options:  xenal, bionic, disco, focal
 # Versions: xenal (16.0.4), bionic (18.04), disco (19.04), focal (20.04)
-RELEASE="focal"
+RELEASE=""
 
 
 # $ARCH is the target processor architecture.
@@ -29,9 +29,9 @@ RELEASE="focal"
 # For newer 64-bit x86 systems (also known as x64, x86_64, Intel 64, and AMD64) use amd64.
 ARCH=""
 
-# the name of your distro and ISO
+# The name and version of your distro and ISO
 OS_NAME=""
-OS_VER="1.00"
+OS_VER=""
 
 # The user of the live boot
 LIVE_USER=""

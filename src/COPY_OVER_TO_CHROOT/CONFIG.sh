@@ -1,7 +1,6 @@
 #!/bin/bash
 
 . CONFIG_SCRIPTS.sh
-. GET_PPA_GPG_KEYS.sh
 
 
 # ----  Setup Variables  ---- #

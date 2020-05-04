@@ -12,10 +12,10 @@ function main() {
     cd image/
 
     # Take note of the ending dot when changing this...
-    sudo mkisofs -r -V "${OS_NAME}" -cache-inodes -J -l \
+    sudo mkisofs -r -V "${OS_NAME}"-"${OS_VER}" -cache-inodes -J -l \
         -boot-info-table -no-emul-boot -boot-load-size 4 \
         -b isolinux/isolinux.bin -c isolinux/boot.cat \
-        -o ../"${OS_NAME}".iso .
+        -o ../"${OS_NAME}"-"${OS_VER}".iso .
 
     cd ..
 }
