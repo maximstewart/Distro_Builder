@@ -59,7 +59,7 @@ function install_live_iso_dependencies() {
         ubuntu-minimal ubuntu-standard
 
     # The generic kernel can baloon a system with just the above
-    # from ~130MB to 485+MB. (With good compression of squashfs)
+    # from ~130MB to 460+MB. (With good compression of squashfs and cleaning)
     # Yet, we need A kernel in order to even boot stuff.
     # I need to look into a kind of menu for the user where they could chose one.
     # For right now, we'll use this...
