@@ -17,21 +17,23 @@ function main() {
           [[ $ANSR != "4" ]] && [[ $ANSR != "5" ]] && \
           [[ $ANSR != "6" ]] && [[ $ANSR != "7" ]] && \
           [[ $ANSR != "8" ]] && [[ $ANSR != "9" ]] && \
-          [[ $ANSR != "10" ]] && [[ $ANSR != "11" ]]; do
+          [[ $ANSR != "10" ]] && [[ $ANSR != "11" ]] && \
+                                [[ $ANSR != "12" ]]; do
         read -p "--> : " ANSR
     done
     case $ANSR in
         "1" ) update_and_upgrade;;
-        "2" ) install_live_iso_dependencies;;
-        "3" ) install_base;;
-        "4" ) install_gaming;;
-        "5" ) install_media;;
-        "6" ) install_office;;
-        "7" ) install_debs;;
-        "8" ) transfer_settings;;
-        "9" ) ./GET_PPA_REPOSITORIES.sh;;
-        "10" ) ./GET_PPA_GPG_KEYS.sh;;
-        "11" ) ./CLEANUP.sh;;
+        "2" ) install_live_iso_dependencies "ubuntu";;
+        "3" ) install_live_iso_dependencies "debian";;
+        "4" ) install_base;;
+        "5" ) install_gaming;;
+        "6" ) install_media;;
+        "7" ) install_office;;
+        "8" ) install_debs;;
+        "9" ) transfer_settings;;
+        "10" ) ./GET_PPA_REPOSITORIES.sh;;
+        "11" ) ./GET_PPA_GPG_KEYS.sh;;
+        "12" ) ./CLEANUP.sh;;
         "0" ) exit;;
         * ) echo "Don't know how you got here but that's a bad sign...";;
     esac
@@ -51,12 +53,14 @@ function install_live_iso_dependencies() {
     apt-get install -y casper lupin-casper
     # Adds ~25MB of stuff
     apt-get install -y discover laptop-detect os-prober
-    # Adds ~55MB of stuff
-    # In keeping with ubuntu-mini-remix structure I've added this here.
-    # Might be a bad idea. (Actually really is a bad idea... as this should be manually called.)
-    # This breaks from keeping things generic for it and debian. (Maybe? Could just fail an install.)
-    apt-get install -y \
-        ubuntu-minimal ubuntu-standard
+
+    # Get the generic requsit packages.
+    case $1 in
+        "ubuntu" ) install_ubuntu_live_pkgs;;
+        "debian" ) install_debian_live_pkgs;;
+    esac
+
+    install_installer
 
     # The generic kernel can baloon a system with just the above
     # from ~130MB to 460+MB. (With good compression of squashfs and cleaning)
@@ -64,7 +68,22 @@ function install_live_iso_dependencies() {
     # I need to look into a kind of menu for the user where they could chose one.
     # For right now, we'll use this...
     apt-get install -y linux-generic
+}
 
+function install_ubuntu_live_pkgs() {
+    # Adds ~55MB of stuff
+    apt-get install -y \
+        ubuntu-minimal ubuntu-standard
+}
+
+function install_debian_live_pkgs() {
+    # Adds ~55MB of stuff {Maybe...I actually haven't checked that these exist}
+    apt-get install -y \
+        debian-minimal debian-standard
+}
+
+
+function install_installer() {
 
     echo "Do you want to install one of the OS installers?"
     echo "\t1) ubiquity-frontend-gtk"
