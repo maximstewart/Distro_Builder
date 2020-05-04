@@ -8,6 +8,7 @@
 
 
 function main() {
+    sleep 2 # Used so we can see stub messages
     clear;
     start_menu_mesage;
     read -p "--> : " ANSR

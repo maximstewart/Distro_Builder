@@ -9,7 +9,8 @@
 
 function main() {
     clear;
-    if [[ $(sanity_check) -eq 1 ]]; then echo "\nExiting..."; return; fi
+    sanity_check
+    if [[ $? -eq 1 ]]; then echo "\nExiting..."; return; fi
 
     start_menu_mesage;
     read -p "--> : " ANSR

@@ -1,3 +1,6 @@
+# Find which directories are consuming a lot of space.
+du -hd 1 <your path>  # -h means human readable; -d is depth
+
 ##  Removes all packages but the ones specified and its dependencies
 # !~nubuntu-minimal
 aptitude markauto '~i !~nlinux-image-generic !~nubuntu-minimal !~nubuntu-standard !~ncasper !~nlupin-casper !~naptitude !~napt-get !~napt'

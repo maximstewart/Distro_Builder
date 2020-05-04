@@ -27,7 +27,7 @@ RELEASE="focal"
 # $ARCH is the target processor architecture.
 # For old 32 bit x86 systems use i386.
 # For newer 64-bit x86 systems (also known as x64, x86_64, Intel 64, and AMD64) use amd64.
-ARCH="amd64"
+ARCH=""
 
 # the name of your distro and ISO
 OS_NAME=""
