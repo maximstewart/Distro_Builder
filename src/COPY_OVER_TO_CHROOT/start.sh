@@ -12,13 +12,7 @@ function main() {
     clear;
     start_menu_mesage;
     read -p "--> : " ANSR
-    while [[ $ANSR != "0" ]] && [[ $ANSR != "1" ]] && \
-          [[ $ANSR != "2" ]] && [[ $ANSR != "3" ]] && \
-          [[ $ANSR != "4" ]] && [[ $ANSR != "5" ]] && \
-          [[ $ANSR != "6" ]] && [[ $ANSR != "7" ]] && \
-          [[ $ANSR != "8" ]] && [[ $ANSR != "9" ]] && \
-          [[ $ANSR != "10" ]] && [[ $ANSR != "11" ]] && \
-                                [[ $ANSR != "12" ]]; do
+    while $ANSR -lt 0 || $ANSR -gt 14; do
         read -p "--> : " ANSR
     done
     case $ANSR in
@@ -31,9 +25,11 @@ function main() {
         "7" ) install_office;;
         "8" ) install_debs;;
         "9" ) transfer_settings;;
-        "10" ) ./GET_PPA_REPOSITORIES.sh;;
-        "11" ) ./GET_PPA_GPG_KEYS.sh;;
-        "12" ) ./CLEANUP.sh;;
+        "10" ) install_alsa;;
+        "11" ) install_pulseaudio;;
+        "12" ) ./GET_PPA_REPOSITORIES.sh;;
+        "13" ) ./GET_PPA_GPG_KEYS.sh;;
+        "14" ) ./CLEANUP.sh;;
         "0" ) exit;;
         * ) echo "Don't know how you got here but that's a bad sign...";;
     esac
@@ -67,7 +63,7 @@ function install_live_iso_dependencies() {
     # Yet, we need A kernel in order to even boot stuff.
     # I need to look into a kind of menu for the user where they could chose one.
     # For right now, we'll use this...
-    apt-get install -y linux-generic
+    # apt-get install -y linux-generic
 }
 
 function install_ubuntu_live_pkgs() {
@@ -80,6 +76,16 @@ function install_debian_live_pkgs() {
     # Adds ~55MB of stuff {Maybe...I actually haven't checked that these exist}
     apt-get install -y \
         debian-minimal debian-standard
+}
+
+function install_alsa() {
+    apt-get install -y \
+        alsa* apulse sox libsox-fmt-all
+}
+
+function install_pulseaudio() {
+    apt-get install -y \
+        pulseaudio pavucontrol sox libsox-fmt-all
 }
 
 
@@ -108,11 +114,15 @@ function install_installer() {
 ######################## Main Desktop ########################
 function install_base() {
     echo "Install base stuff stub..."
-    #  Pushe to a meta-package deb after selecting what if anything you want to keep...
+    # Note: Doing it this way, this actually is a small login manager that doesn't
+    # bring in unity* packages. Slim is also a great choice and even smaller....
+    # sudo apt-get install --no-install-recommends --no-install-suggests lightdm lightdm-gtk-greeter
+
+    #  Push to a meta-package deb after selecting what if anything you want to keep...
         # apt-get install -y xserver-xorg xorg xinit slim synaptic aptitude apt-xapian-index \
-        # gufw wicd-curses pulseaudio pavucontrol file-roller p7zip-rar arj rar unrar-free \
+        # gufw wicd-curses file-roller p7zip-rar arj rar unrar-free \
         # xcompmgr tweak lhasa unar p7zip zip terminator stjerm ttf-mscorefonts-installer \
-        # gparted gdebi sox udisks2 iftop htop tree hardinfo libsox-fmt-all onboard mc \
+        # gparted gdebi sox udisks2 iftop htop tree hardinfo onboard mc \
         # oracle-java8-installer apt-transport-https software-properties-common -y
 
         # apt-get autoremove --purge -y && apt-get autoclean
