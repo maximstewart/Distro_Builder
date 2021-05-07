@@ -5,6 +5,8 @@
 ## WEBSITES
     Window Managers :
         http://xwinman.org/
+        # Python Tiling WM
+            http://docs.qtile.org/en/latest/index.html
     Source List Generator :
         https://repogen.simplylinux.ch/index.php
     Themes :

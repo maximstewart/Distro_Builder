@@ -89,6 +89,10 @@ function sanity_check() {
                 "\tapt-get install xserver-xephyr syslinux squashfs-tools genisoimage netpbm syslinux-utils -y"
         sleep 2
         sudo apt-get install xserver-xephyr syslinux squashfs-tools genisoimage netpbm syslinux-utils -y
+
+        # Note: Need to add arch/manjaro linux detection to run compatable commands.
+        # # cdrkit has 'genisoimage' command
+        # sudo pacman -Syy syslinux squashfs-tools cdrkit netpbm  xorg-server-xephyr
     fi
 
     if [[ "${ARCH}" == "" ]] || [[ "${RELEASE}" == "" ]]; then
