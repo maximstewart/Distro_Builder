@@ -5,6 +5,9 @@
 
 # ----  Setup Variables  ---- #
 
+# Root filesystem path
+ROOT="${CHROOT_PTH}"
+
 # Resolution of Xephyr... ex: 1920x1080 or 1600x900, etc
 RESOLUTION="1920x1080"
 

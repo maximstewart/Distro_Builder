@@ -92,7 +92,7 @@ function sanity_check() {
 
         # Note: Need to add arch/manjaro linux detection to run compatable commands.
         # # cdrkit has 'genisoimage' command
-        # sudo pacman -Syy syslinux squashfs-tools cdrkit netpbm  xorg-server-xephyr
+        # sudo pacman -Syy syslinux squashfs-tools cdrkit netpbm xorg-server-xephyr
     fi
 
     if [[ "${ARCH}" == "" ]] || [[ "${RELEASE}" == "" ]]; then
