@@ -44,6 +44,9 @@ function move_iso_linux_parts() {
     # We will need a kernel and an initrd that was built with the Casper scripts.
     # Grab them from the chroot. Use the current version.
     # Note that before 9.10, the initrd was in gz not lz format...
+    # Should look inti makeinitcpio:
+    #    https://wiki.archlinux.org/title/Mkinitcpio
+    # Is that the same stuff? I'm thinking not but...I r dumb.
     echo "If this fails then use what's in chroot/boot/...:"
     echo "Copying ${CHROOT_PTH}/boot/vmlinuz-5.4.**-**-generic to image/casper/vmlinuz"
     sudo cp "${CHROOT_PTH}"/boot/vmlinuz-5.4.**-**-generic image/casper/vmlinuz
