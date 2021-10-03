@@ -62,12 +62,12 @@ EOF
 
 
 function create_file_structure() {
-    rm -rf "$ROOT" &&
-    mkdir -p "$ROOT"/{etc,tmp,proc,sys,dev,home,mnt,root,usr/{bin,sbin,lib},var} &&
-    chmod a+rwxt "$ROOT"/tmp &&
-    ln -s usr/bin "$ROOT/bin" &&
-    ln -s usr/sbin "$ROOT/sbin" &&
-    ln -s usr/lib "$ROOT/lib"
+    rm -rf "${ROOT}" &&
+    mkdir -p "${ROOT}"/{etc,tmp,proc,sys,dev,home,mnt,root,usr/{bin,sbin,lib},var} &&
+    chmod a+rwxt "${ROOT}"/tmp &&
+    ln -s "${ROOT}"/usr/bin "${ROOT}/bin" &&
+    ln -s "${ROOT}"/usr/sbin "${ROOT}/sbin" &&
+    ln -s "${ROOT}"/usr/lib "${ROOT}/lib"
 }
 
 function main() {
